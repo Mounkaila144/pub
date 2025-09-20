@@ -10,24 +10,34 @@ const Hero = () => {
     <section className="relative isolate overflow-hidden text-[var(--text)]">
       <div className="absolute inset-0 ocean-hero" aria-hidden="true" />
 
-      <div className="container relative z-10 pt-10 pb-40 sm:pt-32 sm:pb-40 lg:pt-40 lg:pb-20">
+      <div className="container relative z-10 pt-40 pb-40 sm:pt-32 sm:pb-40 lg:pt-40 lg:pb-20">
 
             <div className="relative grid items-center gap-12 lg:grid-cols-[1.05fr,0.95fr] lg:gap-16">
               <div className="order-2 space-y-10 lg:order-1">
-                <div className="inline-flex items-center gap-2 rounded-full border border-white/30 bg-white/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-teal-100 shadow-sm ">
-                  <Sparkles className="h-4 w-4 text-teal-100" />
-                  Maison d&rsquo;édition
+                <div className="inline-flex items-center gap-2 rounded-full border-2 border-gradient-to-r from-teal-300/50 via-cyan-300/50 to-blue-300/50 bg-gradient-to-r from-teal-400/20 via-cyan-400/20 to-blue-400/20 backdrop-blur-sm px-6 py-3 text-xs font-semibold uppercase tracking-[0.2em] text-white shadow-lg shadow-teal-400/30 hover:shadow-xl hover:shadow-teal-400/40 hover:scale-105 transition-all duration-500 group">
+                  <Sparkles className="h-4 w-4 text-teal-200 group-hover:text-yellow-300 group-hover:animate-spin transition-all duration-300" />
+                  <span className="bg-gradient-to-r from-teal-100 via-cyan-100 to-blue-100 bg-clip-text text-transparent group-hover:from-yellow-200 group-hover:via-teal-200 group-hover:to-cyan-200">
+                    Maison d&rsquo;édition
+                  </span>
                 </div>
 
-                <h1 className="font-playfair text-4xl leading-[1.05] text-sky-50 sm:text-5xl lg:text-[3.6rem]">
-                  <span className="block">Des ouvrages élégants</span>
-                  <span className="mt-2 block bg-gradient-to-r from-teal-200 via-sky-200 to-white bg-clip-text text-transparent">
+                <h1 className="font-playfair text-4xl leading-[1.05] sm:text-5xl lg:text-[3.6rem] group">
+                  <span className="block text-transparent bg-gradient-to-r from-sky-50 via-white to-teal-50 bg-clip-text hover:from-teal-100 hover:via-cyan-100 hover:to-blue-100 transition-all duration-700 drop-shadow-lg">
+                    Des ouvrages élégants
+                  </span>
+                  <span className="mt-2 block bg-gradient-to-r from-teal-200 via-sky-200 to-white bg-clip-text text-transparent hover:from-yellow-200 hover:via-teal-200 hover:to-cyan-200 transition-all duration-700 drop-shadow-xl relative">
                     pour des voix singulières
+                    <div className="absolute -inset-1 bg-gradient-to-r from-teal-400/20 via-cyan-400/20 to-blue-400/20 rounded-lg blur-xl opacity-0 group-hover:opacity-100 transition-all duration-500 -z-10"></div>
                   </span>
                 </h1>
 
-                <p className="max-w-2xl text-lg text-sky-100/80 sm:text-xl">
-                  Success Publishing offre un accompagnement sur-mesure, de la relecture au lancement, pour transformer chaque manuscrit en expérience de lecture mémorable.
+                <p className="max-w-2xl text-lg sm:text-xl leading-relaxed group hover:scale-105 transition-all duration-500">
+                  <span className="bg-gradient-to-r from-sky-100/90 via-white/90 to-teal-100/90 bg-clip-text text-transparent group-hover:from-teal-200 group-hover:via-cyan-200 group-hover:to-blue-200 transition-all duration-700 drop-shadow-sm">
+                    Success Publishing offre un accompagnement sur-mesure, de la relecture au lancement, pour transformer chaque manuscrit en
+                  </span>
+                  <span className="bg-gradient-to-r from-teal-200 via-cyan-200 to-blue-200 bg-clip-text text-transparent font-semibold group-hover:from-yellow-300 group-hover:via-teal-300 group-hover:to-cyan-300 transition-all duration-700">
+                    expérience de lecture mémorable.
+                  </span>
                 </p>
 
                 <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
