@@ -1,0 +1,76 @@
+{
+  "partners": [
+    {
+      "id": 1,
+      "name": "FNAC",
+      "logo": "https://images.pexels.com/photos/267350/pexels-photo-267350.jpeg?auto=compress&cs=tinysrgb&w=200",
+      "category": "Grandes surfaces culturelles"
+    },
+    {
+      "id": 2,
+      "name": "Amazon Books",
+      "logo": "https://images.pexels.com/photos/267350/pexels-photo-267350.jpeg?auto=compress&cs=tinysrgb&w=200",
+      "category": "Plateforme en ligne"
+    },
+    {
+      "id": 3,
+      "name": "Cultura",
+      "logo": "https://images.pexels.com/photos/267350/pexels-photo-267350.jpeg?auto=compress&cs=tinysrgb&w=200",
+      "category": "Grandes surfaces culturelles"
+    },
+    {
+      "id": 4,
+      "name": "Decitre",
+      "logo": "https://images.pexels.com/photos/267350/pexels-photo-267350.jpeg?auto=compress&cs=tinysrgb&w=200",
+      "category": "Librairie en ligne"
+    },
+    {
+      "id": 5,
+      "name": "Le Furet du Nord",
+      "logo": "https://images.pexels.com/photos/267350/pexels-photo-267350.jpeg?auto=compress&cs=tinysrgb&w=200",
+      "category": "Librairie régionale"
+    },
+    {
+      "id": 6,
+      "name": "Gibert Joseph",
+      "logo": "https://images.pexels.com/photos/267350/pexels-photo-267350.jpeg?auto=compress&cs=tinysrgb&w=200",
+      "category": "Librairie traditionnelle"
+    },
+    {
+      "id": 7,
+      "name": "France Loisirs",
+      "logo": "https://images.pexels.com/photos/267350/pexels-photo-267350.jpeg?auto=compress&cs=tinysrgb&w=200",
+      "category": "Club de lecture"
+    },
+    {
+      "id": 8,
+      "name": "Relay",
+      "logo": "https://images.pexels.com/photos/267350/pexels-photo-267350.jpeg?auto=compress&cs=tinysrgb&w=200",
+      "category": "Points de vente"
+    },
+    {
+      "id": 9,
+      "name": "Libraires Indépendants",
+      "logo": "https://images.pexels.com/photos/267350/pexels-photo-267350.jpeg?auto=compress&cs=tinysrgb&w=200",
+      "category": "Réseau indépendant"
+    },
+    {
+      "id": 10,
+      "name": "Leclerc Espace Culturel",
+      "logo": "https://images.pexels.com/photos/267350/pexels-photo-267350.jpeg?auto=compress&cs=tinysrgb&w=200",
+      "category": "Grande distribution"
+    },
+    {
+      "id": 11,
+      "name": "Carrefour",
+      "logo": "https://images.pexels.com/photos/267350/pexels-photo-267350.jpeg?auto=compress&cs=tinysrgb&w=200",
+      "category": "Grande distribution"
+    },
+    {
+      "id": 12,
+      "name": "Momox",
+      "logo": "https://images.pexels.com/photos/267350/pexels-photo-267350.jpeg?auto=compress&cs=tinysrgb&w=200",
+      "category": "Seconde main"
+    }
+  ]
+}
