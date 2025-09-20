@@ -51,6 +51,11 @@ class AuthorController extends Controller
         return new AuthorResource($author);
     }
 
+    public function showAdmin(Author $author)
+    {
+        return new AuthorResource($author);
+    }
+
     public function update(UpdateAuthorRequest $request, Author $author): JsonResponse
     {
         $data = $request->validated();

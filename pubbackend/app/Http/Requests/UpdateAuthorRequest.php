@@ -16,16 +16,16 @@ class UpdateAuthorRequest extends FormRequest
         $authorId = $this->route('author') ? $this->route('author')->id : $this->route('id');
 
         return [
-            'first_name' => 'required|string|max:120',
-            'last_name' => 'required|string|max:120',
-            'slug' => 'nullable|string|unique:authors,slug,' . $authorId,
-            'bio' => 'nullable|string',
-            'photo' => 'nullable|image|max:3072',
-            'website_url' => 'nullable|url',
-            'socials' => 'nullable|array',
+            'first_name' => 'sometimes|required|string|max:120',
+            'last_name' => 'sometimes|required|string|max:120',
+            'slug' => 'sometimes|nullable|string|unique:authors,slug,' . $authorId,
+            'bio' => 'sometimes|nullable|string',
+            'photo' => 'sometimes|nullable|image|max:3072',
+            'website_url' => 'sometimes|nullable|url',
+            'socials' => 'sometimes|nullable|array',
             'socials.*.platform' => 'required_with:socials|string',
             'socials.*.url' => 'required_with:socials|url',
-            'is_active' => 'boolean',
+            'is_active' => 'sometimes|boolean',
         ];
     }
 }

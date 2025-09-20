@@ -58,6 +58,7 @@ export function DataTablePaginated<T extends Record<string, any>>({
   emptyMessage = 'Aucun résultat trouvé',
   persistFilters = false,
 }: DataTablePaginatedProps<T>) {
+  const ALL_FILTER_VALUE = '__all__'
   const router = useRouter()
   const pathname = usePathname()
   const searchParams = useSearchParams()
@@ -179,15 +180,17 @@ export function DataTablePaginated<T extends Record<string, any>>({
           {filters.map((filter) => (
             <Select
               key={filter.key}
-              value={activeFilters[filter.key] || ''}
-              onValueChange={(value) => handleFilter(filter.key, value)}
+              value={activeFilters[filter.key] ?? ALL_FILTER_VALUE}
+              onValueChange={(value) =>
+                handleFilter(filter.key, value === ALL_FILTER_VALUE ? '' : value)
+              }
             >
               <SelectTrigger className="w-48">
                 <Filter className="h-4 w-4 mr-2" />
                 <SelectValue placeholder={filter.label} />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="">Tous</SelectItem>
+                <SelectItem value={ALL_FILTER_VALUE}>Tous</SelectItem>
                 {filter.options.map((option) => (
                   <SelectItem key={option.value} value={option.value}>
                     {option.label}

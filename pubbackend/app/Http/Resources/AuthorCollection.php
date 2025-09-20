@@ -9,18 +9,18 @@ class AuthorCollection extends ResourceCollection
 {
     public function toArray(Request $request): array
     {
+        $pagination = [
+            'current_page' => $this->currentPage(),
+            'from' => $this->firstItem(),
+            'last_page' => $this->lastPage(),
+            'per_page' => $this->perPage(),
+            'to' => $this->lastItem(),
+            'total' => $this->total(),
+        ];
+
         return [
-            'data' => $this->collection,
-            'meta' => [
-                'pagination' => [
-                    'current_page' => $this->currentPage(),
-                    'from' => $this->firstItem(),
-                    'last_page' => $this->lastPage(),
-                    'per_page' => $this->perPage(),
-                    'to' => $this->lastItem(),
-                    'total' => $this->total(),
-                ],
-            ],
+            'data' => AuthorResource::collection($this->collection),
+            'meta' => array_merge($pagination, ['pagination' => $pagination]),
         ];
     }
 }

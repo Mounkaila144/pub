@@ -35,8 +35,10 @@ Route::middleware('throttle:60,1')->group(function () {
     Route::middleware(['jwt.auth', 'throttle:120,1'])->prefix('admin')->group(function () {
 
         Route::prefix('authors')->group(function () {
+            Route::get('/', [App\Http\Controllers\AuthorController::class, 'index']);
+            Route::get('{author}', [App\Http\Controllers\AuthorController::class, 'showAdmin']);
             Route::post('/', [App\Http\Controllers\AuthorController::class, 'store']);
-            Route::put('{author}', [App\Http\Controllers\AuthorController::class, 'update']);
+            Route::match(['put', 'patch'], '{author}', [App\Http\Controllers\AuthorController::class, 'update']);
             Route::delete('{author}', [App\Http\Controllers\AuthorController::class, 'destroy']);
             Route::post('{author}/photo', [App\Http\Controllers\AuthorController::class, 'storePhoto']);
             Route::delete('{author}/photo', [App\Http\Controllers\AuthorController::class, 'deletePhoto']);
