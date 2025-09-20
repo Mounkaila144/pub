@@ -6,7 +6,7 @@ import Image from 'next/image';
 
 const Hero = () => {
   return (
-    <section className="relative h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-slate-50 via-white to-gray-50">
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-slate-50 via-white to-gray-50 pt-16 lg:pt-20">
       {/* Elegant White Background */}
       <div className="absolute inset-0">
         <Image
@@ -27,22 +27,22 @@ const Hero = () => {
 
       <div className="container relative z-10 text-center px-4 lg:px-8">
         {/* Responsive Content Wrapper - Fixed navbar overlap */}
-        <div className="pt-32 sm:pt-28 lg:pt-20">
+        <div className="pt-8 sm:pt-12 lg:pt-8">
           {/* Elegant Publishing Badge */}
           <div className="inline-flex items-center space-x-2 bg-gradient-to-r from-white/95 to-gray-50/95 backdrop-blur-md px-4 lg:px-6 py-2 lg:py-3 rounded-full shadow-2xl border-2 border-gray-100 mb-4 lg:mb-6 animate-fade-in">
             <Sparkles className="h-3 w-3 lg:h-4 lg:w-4 text-purple-600 animate-pulse" />
-            <span className="text-xs lg:text-sm font-bold bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">✨ Maison d'Édition Premium</span>
+            <span className="text-xs lg:text-sm font-bold bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">✨ Maison d&apos;Édition Premium</span>
           </div>
 
           {/* Responsive Main Title */}
-          <h1 className="font-playfair text-3xl sm:text-4xl lg:text-6xl xl:text-7xl font-bold mb-4 lg:mb-6 leading-tight animate-slide-up">
-            <span className="block bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 bg-clip-text text-transparent fade-in-up" style={{ animationDelay: '0.1s' }}>Success Publishing</span>
-            <span className="block bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent text-2xl sm:text-3xl lg:text-4xl xl:text-5xl fade-in-up" style={{ animationDelay: '0.2s' }}>Votre Vision, Notre Expertise</span>
-          </h1>
+            <h1 className="text-3xl sm:text-4xl lg:text-6xl xl:text-7xl font-bold mb-4 lg:mb-6 leading-tight text-black">
+                <span className="block">Success Publishing</span>
+                <span className="block text-2xl sm:text-3xl lg:text-4xl xl:text-5xl mt-2">Votre Vision, Notre Expertise</span>
+            </h1>
 
           {/* Responsive Subtitle */}
-          <div className="max-w-4xl mx-auto mb-6 lg:mb-1 animate-slide-up" style={{ animationDelay: '0.4s' }}>
-            <p className="text-base sm:text-lg lg:text-xl text-gray-700 font-light leading-relaxed mb-2 lg:mb-3 text-balance">
+          <div className="max-w-4xl mx-auto mb-6 lg:mb-8 animate-slide-up" style={{ animationDelay: '0.4s' }}>
+            <p className="text-base sm:text-lg lg:text-xl text-gray-700 font-light leading-relaxed mb-3 lg:mb-4 text-balance">
               Découvrez notre <span className="font-semibold bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">collection exclusive</span> de livres soigneusement sélectionnés
             </p>
             <p className="text-sm sm:text-base lg:text-lg text-gray-600 font-medium">
@@ -52,7 +52,7 @@ const Hero = () => {
         </div>
 
         {/* Responsive Elegant Action Section */}
-        <div className="flex flex-col items-center animate-scale-in" style={{ animationDelay: '0.6s' }}>
+        <div className="flex flex-col items-center animate-scale-in mt-4 lg:mt-6" style={{ animationDelay: '0.6s' }}>
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 lg:gap-6 mb-6 lg:mb-8 w-full max-w-6xl">
             {[
               { icon: "📚", label: "Catalogue Complet", desc: "Découvrez tous nos livres", gradient: "from-blue-500/10 to-purple-500/10", border: "border-blue-200" },
