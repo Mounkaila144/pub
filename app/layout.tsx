@@ -1,6 +1,8 @@
 import './globals.css';
 import type { Metadata } from 'next';
 import { Playfair_Display, Inter } from 'next/font/google';
+import { QueryProvider } from '@/components/providers/query-provider';
+import { Toaster } from 'sonner';
 
 const playfair = Playfair_Display({ 
   subsets: ['latin'],
@@ -34,7 +36,10 @@ export default function RootLayout({
   return (
     <html lang="fr" className={`${playfair.variable} ${inter.variable}`}>
       <body className="font-inter antialiased">
-        {children}
+        <QueryProvider>
+          {children}
+        </QueryProvider>
+        <Toaster />
       </body>
     </html>
   );

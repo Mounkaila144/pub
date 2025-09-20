@@ -1,0 +1,110 @@
+:root {
+  --bg-1: #021a35;
+  --bg-2: #0b4f6c;
+  --bg-3: #24d1c6;
+  --text: #f5fbff;
+}
+
+.ocean-hero {
+  background:
+    linear-gradient(155deg, rgba(2, 26, 53, 0.96) 0%, rgba(6, 49, 90, 0.92) 46%, rgba(12, 101, 133, 0.88) 74%, rgba(36, 209, 198, 0.58) 100%);
+  background-color: var(--bg-1);
+  position: relative;
+  color: var(--text);
+}
+
+.ocean-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(at 18% 25%, rgba(36, 209, 198, 0.3) 0, rgba(36, 209, 198, 0) 55%),
+    radial-gradient(at 78% 12%, rgba(124, 205, 255, 0.22) 0, rgba(124, 205, 255, 0) 60%),
+    radial-gradient(at 55% 88%, rgba(12, 101, 133, 0.32) 0, rgba(12, 101, 133, 0) 65%);
+  mix-blend-mode: screen;
+  animation: oceanAurora 22s ease-in-out infinite;
+}
+
+.hero-aurora,
+.hero-orb {
+  pointer-events: none;
+}
+
+.hero-aurora {
+  background:
+    radial-gradient(at 30% 10%, rgba(36, 209, 198, 0.35) 0, rgba(36, 209, 198, 0) 55%),
+    radial-gradient(at 70% 0%, rgba(124, 205, 255, 0.3) 0, rgba(124, 205, 255, 0) 65%),
+    radial-gradient(at 48% 100%, rgba(9, 71, 102, 0.45) 0, rgba(9, 71, 102, 0) 70%);
+  animation: oceanAurora 18s ease-in-out infinite;
+  opacity: 0.9;
+}
+
+.hero-orb {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(0px);
+  mix-blend-mode: screen;
+  opacity: 0.78;
+}
+
+.hero-orb--amber {
+  background: radial-gradient(circle, rgba(36, 209, 198, 0.55) 0%, rgba(36, 209, 198, 0.06) 68%);
+  animation: oceanDrift 26s ease-in-out infinite;
+}
+
+.hero-orb--rose {
+  background: radial-gradient(circle, rgba(124, 205, 255, 0.55) 0%, rgba(124, 205, 255, 0.05) 72%);
+  animation: oceanDriftReverse 24s ease-in-out infinite;
+}
+
+.hero-orb--indigo {
+  background: radial-gradient(circle, rgba(24, 71, 128, 0.45) 0%, rgba(24, 71, 128, 0.08) 70%);
+  animation: oceanDrift 30s ease-in-out infinite;
+}
+
+.ocean-wave-divider svg {
+  display: block;
+  height: 100%;
+  width: 100%;
+}
+
+.ocean-wave-divider path {
+  fill: rgba(255, 255, 255, 1);
+}
+
+.glass-card-surface {
+  backdrop-filter: blur(28px);
+  -webkit-backdrop-filter: blur(28px);
+  background: linear-gradient(140deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0.06));
+}
+
+@keyframes oceanAurora {
+  0%,
+  100% {
+    background-position: 0% 50%, 50% 0%, 50% 100%;
+  }
+  50% {
+    background-position: 56% 65%, 72% 18%, 42% 78%;
+  }
+}
+
+@keyframes oceanDrift {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(20px, -16px, 0) scale(1.08);
+  }
+}
+
+@keyframes oceanDriftReverse {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(-22px, 18px, 0) scale(1.06);
+  }
+}

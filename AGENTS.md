@@ -1,34 +1,36 @@
 # Repository Guidelines
 
 ## Project Structure & Module Organization
-- The Next.js App Router entrypoint lives in `app/`, with `layout.tsx` and `page.tsx` wiring global providers and styles from `app/globals.css`.
-- Page-level building blocks live in `components/`, while reusable primitives from shadcn/ui are colocated under `components/ui/`.
-- Client-side utilities sit in `lib/utils.ts`, shared hooks in `hooks/`, and mocked datasets in `data/*.json` for local development.
-- Static assets (logos, favicons, fonts) reside in `public/`; update paths in components rather than mutating build output.
+- The Next.js App Router front end sits in `app/`; `layout.tsx` wires providers and `app/globals.css`.
+- Feature sections live under `components/`, primitives under `components/ui/`; compose pages by exporting client/server components.
+- Shared helpers go in `lib/` and `hooks/`; mocked data sits in `data/*.json` for local content.
+- Static assets and fonts belong in `public/`; Tailwind tokens in `tailwind.config.ts`; legacy global styles in `styles/`.
+- A Laravel API prototype lives under `pubbackend/`; keep changes isolated and coordinate merges with backend owners.
 
 ## Build, Test, and Development Commands
-- `npm install` — install dependencies pinned by `package-lock.json`.
-- `npm run dev` — start the Next.js dev server on port 3000 with hot reloading.
-- `npm run build` — create the production static export configured in `next.config.js`.
-- `npm run start` — serve the last build to validate production behavior.
-- `npm run lint` — run ESLint with the Next.js config; keep it clean before pushing.
+- `npm install` installs dependencies pinned via `package-lock.json`.
+- `npm run dev` starts Next.js with hot reload on :3000.
+- `npm run build` compiles a static export as configured in `next.config.js`.
+- `npm run start` serves the latest build for production checks.
+- `npm run lint` runs the Next.js ESLint preset; fix or annotate failures before pushing.
 
 ## Coding Style & Naming Conventions
-- Use TypeScript throughout; prefer `.tsx` for JSX and `.ts` for utilities.
-- Follow 2-space indentation; keep imports sorted by module path, then local files.
-- Name React components and files with PascalCase (`components/Header.tsx`), hooks with `use`-prefixed camelCase, and helpers in `lib/` as camelCase exports.
-- Favor Tailwind utility classes defined in `tailwind.config.ts` over ad-hoc CSS; extend design tokens there when needed.
+- Use TypeScript everywhere; prefer `.tsx` for components and `.ts` for utilities.
+- Stick to 2-space indentation and order imports: framework, third-party, then local paths.
+- Name components with PascalCase (`HeroSection.tsx`), hooks with `use`-prefixed camelCase, and shared helpers in `lib/` as camelCase exports.
+- Favor Tailwind utility classes; extend design tokens in `tailwind.config.ts` instead of custom CSS.
 
 ## Testing Guidelines
-- Automated tests are not set up yet; when adding them, place files next to the code under test and suffix with `.test.ts(x)`.
-- Validate new UI manually in `npm run dev`; add lightweight data checks or component stories when touching `data/` or `components/ui/`.
-- Always run `npm run lint` before requesting review to catch common issues.
+- Automated tests are not wired up; when adding them, colocate `.test.ts(x)` files with the component or helper under test.
+- Validate UI flows with `npm run dev` and confirm data mocks still resolve.
+- Always run `npm run lint` before requesting review to catch drift.
 
 ## Commit & Pull Request Guidelines
-- Write concise, present-tense commit messages (e.g., `Add CTA section layout`); include details in the body if context is non-trivial.
-- PRs should describe the change, reference related issues, and include screenshots or GIFs for visual updates.
-- Highlight any config or data changes and note follow-up tasks so reviewers can assess deployment impact.
+- Write concise, present-tense commit subjects (e.g., `Add pricing hero`); use bodies for context or follow-up notes.
+- PRs should explain intent, link relevant issues, and include screenshots or GIFs for visual tweaks.
+- Call out config, data, or backend (`pubbackend/`) updates so reviewers can assess deployment impact.
 
-## Deployment & Configuration Notes
-- The site exports statically (`output: 'export'`) and skips Next image optimization; ensure assets placed in `public/` are already optimized.
-- Keep `.env` usage minimal; prefer static data in `data/` unless runtime configuration is required.
+## Security & Configuration Tips
+- The site exports statically (`output: 'export'`); ensure assets dropped in `public/` are already optimized and sized.
+- Keep `.env` usage minimal; prefer values in `data/` or `tailwind.config.ts`.
+- Run dependency updates through `npm install` to respect the lockfile and avoid drifting SWC binaries.
