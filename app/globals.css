@@ -96,6 +96,37 @@
                 radial-gradient(at 0% 50%, hsl(220 50% 15% / 0.02) 0px, transparent 50%);
   }
 
+  .hero-aurora {
+    background: radial-gradient(at 20% 20%, rgba(244, 208, 160, 0.28) 0px, transparent 55%),
+                radial-gradient(at 80% 15%, rgba(230, 210, 246, 0.32) 0px, transparent 60%),
+                radial-gradient(at 50% 80%, rgba(161, 189, 241, 0.22) 0px, transparent 55%);
+    animation: heroAurora 18s ease-in-out infinite;
+    opacity: 0.9;
+  }
+
+  .hero-orb {
+    position: absolute;
+    border-radius: 9999px;
+    filter: blur(0px);
+    mix-blend-mode: screen;
+    opacity: 0.85;
+  }
+
+  .hero-orb--amber {
+    background: radial-gradient(circle, rgba(244, 186, 132, 0.55) 0%, rgba(244, 186, 132, 0.05) 62%);
+    animation: heroDrift 24s ease-in-out infinite;
+  }
+
+  .hero-orb--rose {
+    background: radial-gradient(circle, rgba(231, 178, 199, 0.45) 0%, rgba(231, 178, 199, 0.06) 70%);
+    animation: heroDriftReverse 26s ease-in-out infinite;
+  }
+
+  .hero-orb--indigo {
+    background: radial-gradient(circle, rgba(164, 197, 255, 0.4) 0%, rgba(164, 197, 255, 0.05) 70%);
+    animation: heroDrift 28s ease-in-out infinite;
+  }
+
   /* Elegant animations and interactions */
   .hover-lift {
     transition: var(--transition-elegant);
@@ -189,6 +220,36 @@
 
   .animate-scale-in {
     animation: scaleIn 0.5s cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
+  }
+
+  @keyframes heroAurora {
+    0%,
+    100% {
+      background-position: 0% 50%, 50% 0%, 50% 100%;
+    }
+    50% {
+      background-position: 50% 60%, 60% 20%, 40% 80%;
+    }
+  }
+
+  @keyframes heroDrift {
+    0%,
+    100% {
+      transform: translate3d(0, 0, 0) scale(1);
+    }
+    50% {
+      transform: translate3d(18px, -12px, 0) scale(1.08);
+    }
+  }
+
+  @keyframes heroDriftReverse {
+    0%,
+    100% {
+      transform: translate3d(0, 0, 0) scale(1);
+    }
+    50% {
+      transform: translate3d(-20px, 14px, 0) scale(1.05);
+    }
   }
 
   @keyframes fadeIn {
