@@ -4,47 +4,36 @@ import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { ArrowRight, Sparkles } from 'lucide-react';
 
-const stats = [
-  { value: '500+', label: 'Auteurs accompagnés' },
-  { value: '100+', label: 'Lancements annuels' },
-  { value: '98%', label: 'Satisfaction clients' },
-  { value: '15', label: 'Pays de diffusion' },
-];
 
 const Hero = () => {
   return (
-    <section className="relative isolate overflow-hidden bg-white">
+    <section className="relative isolate overflow-hidden text-[var(--text)]">
+      <div className="absolute inset-0 ocean-hero" aria-hidden="true" />
 
-      <div className="container relative pt-28 pb-20 sm:pt-32 sm:pb-24 lg:pt-20 lg:pb-32">
-        <div className="relative overflow-hidden rounded-[44px] border border-white/50 bg-white/65 px-2 py-5 shadow-[0_45px_80px_-50px_rgba(15,23,42,0.6)] backdrop-blur-md sm:px-10 sm:py-16 lg:rounded-[56px] lg:px-16 lg:py-20">
-          <div className="hero-aurora pointer-events-none absolute inset-0" />
-          <div className="hero-orb hero-orb--amber pointer-events-none absolute -top-24 -left-20 h-64 w-64 sm:h-72 sm:w-72" />
-          <div className="hero-orb hero-orb--rose pointer-events-none absolute top-1/2 -right-16 h-72 w-72 sm:h-80 sm:w-80" />
-          <div className="hero-orb hero-orb--indigo pointer-events-none absolute -bottom-20 left-1/2 h-64 w-64 -translate-x-1/2 sm:-bottom-24 sm:h-80 sm:w-80" />
+      <div className="container relative z-10 pt-10 pb-10 sm:pt-32 sm:pb-40 lg:pt-10 lg:pb-20">
 
-          <div className="relative">
-            <div className="grid items-center gap-14 lg:grid-cols-[1.05fr,0.95fr] lg:gap-16">
+            <div className="relative grid items-center gap-12 lg:grid-cols-[1.05fr,0.95fr] lg:gap-16">
               <div className="order-2 space-y-10 lg:order-1">
-                <div className="inline-flex items-center gap-2 rounded-full border border-amber-100/80 bg-white/90 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-amber-600 shadow-sm backdrop-blur">
-                  <Sparkles className="h-4 w-4 text-amber-500" />
-                  Maison d&rsquo;édition boutique
+                <div className="inline-flex items-center gap-2 rounded-full border border-white/30 bg-white/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-teal-100 shadow-sm ">
+                  <Sparkles className="h-4 w-4 text-teal-100" />
+                  Maison d&rsquo;édition
                 </div>
 
-                <h1 className="font-playfair text-4xl leading-[1.05] text-slate-900 sm:text-5xl lg:text-[3.75rem]">
-                  <span className="block text-slate-900">Des ouvrages élégants</span>
-                  <span className="mt-2 block bg-gradient-to-r from-amber-500 via-rose-500 to-slate-900 bg-clip-text text-transparent">
+                <h1 className="font-playfair text-4xl leading-[1.05] text-sky-50 sm:text-5xl lg:text-[3.6rem]">
+                  <span className="block">Des ouvrages élégants</span>
+                  <span className="mt-2 block bg-gradient-to-r from-teal-200 via-sky-200 to-white bg-clip-text text-transparent">
                     pour des voix singulières
                   </span>
                 </h1>
 
-                <p className="max-w-2xl text-lg text-slate-600 sm:text-xl">
+                <p className="max-w-2xl text-lg text-sky-100/80 sm:text-xl">
                   Success Publishing offre un accompagnement sur-mesure, de la relecture au lancement, pour transformer chaque manuscrit en expérience de lecture mémorable.
                 </p>
 
                 <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
                   <Button
                     size="lg"
-                    className="rounded-full bg-slate-900 px-8 py-6 text-base font-semibold text-white shadow-lg shadow-slate-900/15 transition-all duration-300 hover:-translate-y-0.5 hover:bg-slate-800"
+                    className="rounded-full bg-white px-9 py-6 text-base font-semibold text-slate-900 shadow-lg shadow-sky-900/20 transition-all duration-300 hover:-translate-y-0.5 hover:bg-sky-100"
                   >
                     Déposer mon manuscrit
                     <ArrowRight className="ml-2 h-5 w-5" />
@@ -52,68 +41,71 @@ const Hero = () => {
                   <Button
                     variant="ghost"
                     size="lg"
-                    className="rounded-full border border-slate-200 px-8 py-6 text-base font-semibold text-slate-900 transition-all duration-300 hover:-translate-y-0.5 hover:bg-slate-50"
+                    className="rounded-full border border-white/40 px-9 py-6 text-base font-semibold text-sky-50 transition-all duration-300 hover:-translate-y-0.5 hover:bg-white/10"
                   >
                     Découvrir le catalogue
                   </Button>
                 </div>
 
-                <dl className="grid max-w-2xl grid-cols-2 gap-x-10 gap-y-8 text-left sm:gap-x-12">
-                  {stats.map((stat) => (
-                    <div key={stat.label} className="space-y-1 border-l border-slate-200 pl-6">
-                      <dt className="font-playfair text-3xl font-semibold text-slate-900">
-                        {stat.value}
-                      </dt>
-                      <dd className="text-sm font-medium text-slate-500">
-                        {stat.label}
-                      </dd>
-                    </div>
-                  ))}
-                </dl>
               </div>
 
-              <div className="relative order-1 lg:order-2">
-                <div className="absolute -inset-5 -z-10 rounded-[48px] bg-gradient-to-br from-amber-100/25 via-white to-transparent opacity-90 blur-2xl sm:-inset-6" />
-                <div className="relative overflow-hidden rounded-[32px] border border-white/70 bg-white/85 shadow-[0_25px_50px_-25px_rgba(15,23,42,0.35)] backdrop-blur sm:rounded-[40px]">
-                  <Image
-                    src="/images/kirikou/high-angle-girl-library-reading.jpg"
-                    alt="Autrice inspirée dans une bibliothèque lumineuse"
-                    width={960}
-                    height={1280}
-                    className="h-full w-full object-cover"
-                    priority
-                  />
+              <div className="relative order-1 flex justify-center lg:order-2">
+                <div className="relative max-w-sm">
+                  <div className="rounded-[36px] bg-[linear-gradient(130deg,var(--bg-3)_0%,rgba(124,205,255,0.65)_50%,rgba(2,26,53,0.9)_100%)] p-[2px] shadow-[0_45px_80px_-50px_rgba(2,26,53,0.8)]">
+                    <div className="relative overflow-hidden rounded-[32px] bg-slate-950/30">
+                      <Image
+                        src="/images/kirikou/high-angle-girl-library-reading.jpg"
+                        alt="Autrice inspirée dans une bibliothèque lumineuse"
+                        width={960}
+                        height={1280}
+                        className="h-full w-full object-cover"
+                        priority
+                      />
+                    </div>
+                  </div>
 
-                  <div className="absolute inset-x-4 bottom-4 rounded-3xl border border-white/60 bg-white/90 px-5 py-5 shadow-lg backdrop-blur sm:inset-x-6 sm:bottom-6 sm:px-6">
-                    <p className="text-xs font-semibold uppercase tracking-[0.3em] text-amber-600">
+                  <div className="absolute -top-12 right-0 w-40 rounded-3xl border border-white/20 bg-slate-950/40 p-4 text-left shadow-2xl backdrop-blur-xl sm:-top-14 sm:right-4">
+                    <p className="text-[11px] font-semibold uppercase tracking-[0.25em] text-teal-100">
+                      À la une
+                    </p>
+                    <p className="mt-3 text-sm font-semibold text-white">
+                      &laquo; Le Leadership de Kirikou &raquo;
+                    </p>
+                    <p className="mt-1 text-xs text-sky-100/70">
+                      Disponible dès maintenant sur toutes les plateformes partenaires.
+                    </p>
+                  </div>
+
+                  <div className="absolute inset-x-6 bottom-6 rounded-3xl border border-white/20 bg-slate-950/30 px-6 py-5 text-left shadow-xl backdrop-blur-xl">
+                    <p className="text-xs font-semibold uppercase tracking-[0.3em] text-teal-100">
                       Lancement réussi
                     </p>
                     <div className="mt-3 flex items-center gap-4">
-                      <div className="font-playfair text-3xl font-semibold text-slate-900">
-                        +32%
-                      </div>
-                      <p className="max-w-[220px] text-sm text-slate-500">
+                      <p className="font-playfair text-3xl font-semibold text-white">+32%</p>
+                      <p className="max-w-[220px] text-sm text-sky-100/80">
                         de ventes sur les six premiers mois grâce à notre stratégie de diffusion premium.
                       </p>
                     </div>
                   </div>
                 </div>
-
-                <div className="absolute -top-10 right-4 w-36 rounded-3xl border border-slate-100 bg-white/95 p-4 text-left shadow-xl backdrop-blur sm:right-6 sm:w-40">
-                  <p className="text-[11px] font-semibold uppercase tracking-[0.25em] text-amber-600">
-                    À la une
-                  </p>
-                  <p className="mt-3 text-sm font-semibold text-slate-900">
-                    &laquo; Le Leadership de Kirikou &raquo;
-                  </p>
-                  <p className="mt-1 text-xs text-slate-500">
-                    Disponible dès maintenant sur toutes les plateformes partenaires.
-                  </p>
-                </div>
               </div>
             </div>
-          </div>
-        </div>
+      </div>
+
+      <div className="ocean-wave-divider pointer-events-none absolute inset-x-0 bottom-0 h-24 sm:h-32" aria-hidden="true">
+        <svg viewBox="0 0 1440 160" preserveAspectRatio="none">
+          <defs>
+            <linearGradient id="hero-wave-gradient" x1="0%" x2="100%" y1="0%" y2="0%">
+              <stop offset="0%" style={{ stopColor: 'rgba(36, 209, 198, 0.45)' }} />
+              <stop offset="45%" style={{ stopColor: 'rgba(124, 205, 255, 0.4)' }} />
+              <stop offset="100%" style={{ stopColor: 'rgba(255, 255, 255, 0.95)' }} />
+            </linearGradient>
+          </defs>
+          <path
+            d="M0,64 C120,96 240,128 360,128 C520,128 640,80 800,80 C960,80 1080,128 1240,128 C1320,128 1380,96 1440,80 L1440,0 L0,0 Z"
+            fill="url(#hero-wave-gradient)"
+          />
+        </svg>
       </div>
     </section>
   );

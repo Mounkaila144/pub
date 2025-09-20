@@ -12,7 +12,7 @@ import Footer from '@/components/Footer';
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-[radial-gradient(circle_at_top,_#f3ede4,_#ffffff_45%)] text-slate-900">
+    <main className="min-h-screen bg-[radial-gradient(circle_at_top,_rgba(36,209,198,0.08),_#ffffff_55%)] text-slate-900">
       <Header />
       <Hero />
       <StepsPublish />
