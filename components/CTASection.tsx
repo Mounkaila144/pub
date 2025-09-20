@@ -5,85 +5,63 @@ import { ArrowRight, Sparkles } from 'lucide-react';
 
 const CTASection = () => {
   return (
-    <section className="py-24 bg-gradient-to-br from-primary via-primary/95 to-accent/80 text-white relative overflow-hidden">
-      {/* Background Pattern */}
-      <div className="absolute inset-0 editorial-grain opacity-10" />
-      
-      {/* Decorative Elements */}
-      <div className="absolute top-1/4 right-1/4 w-64 h-64 bg-white/5 rounded-full blur-3xl" />
-      <div className="absolute bottom-1/4 left-1/4 w-96 h-96 bg-accent/10 rounded-full blur-3xl" />
+    <section className="relative overflow-hidden bg-slate-900 py-24 text-white">
+      <div className="absolute inset-0">
+        <div className="absolute inset-x-0 -top-40 h-[420px] bg-[radial-gradient(ellipse_at_top,_rgba(255,255,255,0.12),_transparent_65%)]" />
+        <div className="absolute -bottom-32 left-1/2 h-96 w-96 -translate-x-1/2 rounded-full bg-gradient-to-br from-amber-400/40 via-transparent to-transparent blur-3xl" />
+        <div className="absolute inset-0 bg-[linear-gradient(135deg,rgba(255,255,255,0.04),rgba(148,163,184,0.05))]" />
+      </div>
 
-      <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        {/* Badge */}
-        <div className="inline-flex items-center space-x-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full border border-white/20 mb-8">
-          <Sparkles className="h-4 w-4 text-accent" />
-          <span className="text-sm font-medium">Rejoignez plus de 500 auteurs</span>
+      <div className="container relative z-10 text-center">
+        <div className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-4 py-2 text-xs font-semibold uppercase tracking-[0.3em] text-amber-300 backdrop-blur">
+          <Sparkles className="h-4 w-4" />
+          Programme auteur signature
         </div>
 
-        {/* Main Content */}
-        <h2 className="font-playfair text-4xl lg:text-6xl font-bold mb-6 leading-tight">
-          Prêt à publier
-          <br />
-          <span className="text-accent">votre livre ?</span>
+        <h2 className="mt-8 font-playfair text-4xl leading-tight sm:text-5xl lg:text-6xl">
+          Nous façonnons votre livre comme une œuvre
         </h2>
 
-        <p className="text-xl text-white/90 mb-12 max-w-2xl mx-auto leading-relaxed">
-          Transformez votre manuscrit en succès de librairie avec l'accompagnement premium de Success Publishing.
+        <p className="mt-6 mx-auto max-w-2xl text-lg text-slate-200">
+          Profitez d’une équipe éditoriale dédiée, d’un studio de direction artistique et d’une diffusion internationale pour donner un éclat durable à votre projet.
         </p>
 
-        {/* CTA Buttons */}
-        <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-16">
-          <Button 
-            size="lg" 
-            className="bg-accent hover:bg-accent/90 text-accent-foreground font-bold px-10 py-6 text-lg rounded-full group shadow-xl hover:shadow-2xl transition-all hover:scale-105"
-          >
-            Publier maintenant
-            <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
-          </Button>
-          
-          <Button 
-            variant="outline" 
+        <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
+          <Button
             size="lg"
-            className="border-2 border-white/30 text-white hover:bg-white/10 backdrop-blur-sm font-semibold px-10 py-6 text-lg rounded-full"
+            className="rounded-full bg-white px-10 py-6 text-base font-semibold text-slate-900 shadow-lg shadow-white/10 transition-transform duration-300 hover:-translate-y-0.5 hover:bg-slate-100"
           >
-            Découvrir nos services
+            Prendre rendez-vous
+            <ArrowRight className="ml-2 h-5 w-5" />
+          </Button>
+          <Button
+            variant="outline"
+            size="lg"
+            className="rounded-full border border-white/40 px-10 py-6 text-base font-semibold text-white transition-transform duration-300 hover:-translate-y-0.5 hover:bg-white/10"
+          >
+            Recevoir la brochure
           </Button>
         </div>
 
-        {/* Trust Elements */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-          <div className="text-white/80">
-            <div className="font-playfair text-2xl font-bold text-white mb-1">
-              Gratuit
+        <div className="mt-16 grid gap-8 text-center sm:grid-cols-2 lg:grid-cols-4">
+          {[{
+            value: 'Gratuit',
+            label: 'Audit éditorial'
+          }, {
+            value: '30 jours',
+            label: 'Pour la première mise en librairie'
+          }, {
+            value: '24/7',
+            label: 'Contact avec l’équipe éditoriale'
+          }, {
+            value: '100%',
+            label: 'Droits conservés par l’auteur'
+          }].map((item) => (
+            <div key={item.label} className="rounded-3xl border border-white/15 bg-white/5 px-6 py-6 shadow-lg shadow-black/10 backdrop-blur">
+              <div className="font-playfair text-3xl font-semibold">{item.value}</div>
+              <p className="mt-2 text-sm text-slate-200">{item.label}</p>
             </div>
-            <div className="text-sm">
-              Devis personnalisé
-            </div>
-          </div>
-          <div className="text-white/80">
-            <div className="font-playfair text-2xl font-bold text-white mb-1">
-              30 jours
-            </div>
-            <div className="text-sm">
-              Première publication
-            </div>
-          </div>
-          <div className="text-white/80">
-            <div className="font-playfair text-2xl font-bold text-white mb-1">
-              24/7
-            </div>
-            <div className="text-sm">
-              Support auteur
-            </div>
-          </div>
-          <div className="text-white/80">
-            <div className="font-playfair text-2xl font-bold text-white mb-1">
-              100%
-            </div>
-            <div className="text-sm">
-              Droits conservés
-            </div>
-          </div>
+          ))}
         </div>
       </div>
     </section>

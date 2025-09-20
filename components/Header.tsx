@@ -2,8 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { Button } from '@/components/ui/button';
-import { Menu, X, BookOpen } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 import Image from 'next/image';
 
 const Header = () => {
@@ -32,8 +31,8 @@ const Header = () => {
     <header
       className={`fixed top-0 w-full z-50 transition-all duration-500 ${
         isScrolled
-          ? 'bg-white/95 backdrop-blur-xl shadow-2xl border-b border-gray-100'
-          : 'bg-white/10 backdrop-blur-sm'
+          ? 'bg-white/90 backdrop-blur-xl shadow-[0_20px_45px_-25px_rgba(15,23,42,0.45)] border-b border-slate-100'
+          : 'bg-white/40 backdrop-blur-md'
       }`}
     >
       <div className="container">
@@ -45,7 +44,7 @@ const Header = () => {
               alt="Success Publishing"
               width={40}
               height={40}
-              className="h-8 w-8 lg:h-10 lg:w-10 group-hover:scale-110 transition-all duration-300 filter drop-shadow-lg"
+              className="h-8 w-8 lg:h-10 lg:w-10 transition-all duration-500 group-hover:scale-105"
             />
             <span className="font-playfair text-responsive-lg font-bold text-gray-900 group-hover:text-gray-700 transition-all duration-300 drop-shadow-lg">
               Success Publishing
@@ -58,10 +57,10 @@ const Header = () => {
               <Link
                 key={item.label}
                 href={item.href}
-                className="text-sm font-semibold text-gray-900 hover:text-gray-700 transition-all duration-300 relative group focus-elegant px-4 py-2 rounded-lg hover:bg-white/20 shadow-lg hover:shadow-xl"
+                className="group relative text-sm font-semibold text-slate-600 transition-colors duration-300 focus-elegant hover:text-slate-900"
               >
                 {item.label}
-                <span className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-0 h-0.5 bg-gray-900 transition-all duration-300 group-hover:w-8 rounded-full" />
+                <span className="pointer-events-none absolute -bottom-2 left-1/2 h-px w-0 -translate-x-1/2 bg-slate-900 transition-all duration-500 group-hover:w-10" />
               </Link>
             ))}
           </nav>
@@ -69,7 +68,7 @@ const Header = () => {
           {/* Elegant Mobile menu button */}
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="lg:hidden p-3 rounded-xl text-gray-900 hover:text-gray-700 hover:bg-white/20 transition-all duration-300 focus-elegant shadow-lg"
+            className="lg:hidden rounded-full p-2.5 text-slate-700 transition-all duration-300 hover:bg-white/70 focus-elegant"
           >
             {isMobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
           </button>
@@ -77,19 +76,18 @@ const Header = () => {
 
         {/* Elegant Mobile Navigation */}
         {isMobileMenuOpen && (
-          <div className="lg:hidden bg-white/95 backdrop-blur-xl border-t border-gray-100 shadow-2xl animate-slide-up">
+          <div className="animate-slide-up border-t border-slate-100 bg-white/95 backdrop-blur-xl shadow-xl lg:hidden">
             <nav className="section-padding-sm space-y-1">
               {navItems.map((item) => (
                 <Link
                   key={item.label}
                   href={item.href}
-                  className="block px-6 py-4 text-sm font-semibold text-gray-800 hover:text-gray-900 hover:bg-gray-50 transition-all duration-300 rounded-xl focus-elegant shadow-md hover:shadow-lg"
+                  className="block rounded-xl px-6 py-4 text-sm font-semibold text-slate-700 transition-all duration-300 focus-elegant hover:bg-slate-50"
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
                   {item.label}
                 </Link>
               ))}
-
             </nav>
           </div>
         )}

@@ -1,92 +1,114 @@
 "use client";
 
-import { Button } from '@/components/ui/button';
-import { ArrowRight, Sparkles, Star } from 'lucide-react';
 import Image from 'next/image';
+import { Button } from '@/components/ui/button';
+import { ArrowRight, Sparkles } from 'lucide-react';
+
+const stats = [
+  { value: '500+', label: 'Auteurs accompagnés' },
+  { value: '100+', label: 'Lancements annuels' },
+  { value: '98%', label: 'Satisfaction clients' },
+  { value: '15', label: 'Pays de diffusion' },
+];
 
 const Hero = () => {
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-slate-50 via-white to-gray-50 pt-16 lg:pt-20">
-      {/* Elegant White Background */}
+    <section className="relative isolate overflow-hidden bg-white">
       <div className="absolute inset-0">
-        <Image
-          src="/images/kirikou/book-library-with-open-textbook.jpg"
-          alt="Library background"
-          fill
-          className="object-cover opacity-5"
-          priority
-        />
-        <div className="absolute inset-0 bg-gradient-to-br from-white/95 via-gray-50/90 to-slate-100/95" />
-        <div className="absolute inset-0 bg-gradient-to-t from-white/80 via-transparent to-white/60" />
+        <div className="absolute inset-x-0 -top-40 h-[480px] bg-[radial-gradient(ellipse_at_top,_rgba(244,236,225,0.65),_transparent_70%)]" />
+        <div className="absolute inset-y-0 left-0 w-1/2 bg-[radial-gradient(circle_at_left,_rgba(244,162,89,0.12),_transparent_55%)]" />
+        <div className="absolute -bottom-32 -right-20 h-96 w-96 rounded-full bg-gradient-to-br from-amber-100/60 via-white to-transparent blur-3xl" />
       </div>
 
-      {/* Sophisticated White Decorative Elements */}
-      <div className="absolute top-1/4 right-1/4 w-80 h-80 bg-gradient-to-r from-gray-100/40 to-slate-100/30 rounded-full blur-3xl animate-pulse" />
-      <div className="absolute bottom-1/4 left-1/4 w-96 h-96 bg-gradient-to-r from-gray-50/30 to-white/20 rounded-full blur-3xl" />
-      <div className="absolute top-1/3 left-1/3 w-64 h-64 bg-gradient-to-r from-slate-100/20 to-gray-100/15 rounded-full blur-2xl" />
+      <div className="container relative pt-28 pb-20 sm:pt-32 sm:pb-24 lg:pt-40 lg:pb-32">
+        <div className="grid items-center gap-14 lg:grid-cols-[1.05fr,0.95fr] lg:gap-16">
+          <div className="order-2 space-y-10 lg:order-1">
+            <div className="inline-flex items-center gap-2 rounded-full border border-amber-100/80 bg-white/90 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-amber-600 shadow-sm backdrop-blur">
+              <Sparkles className="h-4 w-4 text-amber-500" />
+              Maison d&rsquo;édition boutique
+            </div>
 
-      <div className="container relative z-10 text-center px-4 lg:px-8">
-        {/* Responsive Content Wrapper - Fixed navbar overlap */}
-        <div className="pt-8 sm:pt-12 lg:pt-8">
-          {/* Elegant Publishing Badge */}
-          <div className="inline-flex items-center space-x-2 bg-gradient-to-r from-white/95 to-gray-50/95 backdrop-blur-md px-4 lg:px-6 py-2 lg:py-3 rounded-full shadow-2xl border-2 border-gray-100 mb-4 lg:mb-6 animate-fade-in">
-            <Sparkles className="h-3 w-3 lg:h-4 lg:w-4 text-purple-600 animate-pulse" />
-            <span className="text-xs lg:text-sm font-bold bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">✨ Maison d&apos;Édition Premium</span>
-          </div>
-
-          {/* Responsive Main Title */}
-            <h1 className="text-3xl sm:text-4xl lg:text-6xl xl:text-7xl font-bold mb-4 lg:mb-6 leading-tight text-black">
-                <span className="block">Success Publishing</span>
-                <span className="block text-2xl sm:text-3xl lg:text-4xl xl:text-5xl mt-2">Votre Vision, Notre Expertise</span>
+            <h1 className="font-playfair text-4xl leading-[1.05] text-slate-900 sm:text-5xl lg:text-[3.75rem]">
+              <span className="block text-slate-900">Des ouvrages élégants</span>
+              <span className="mt-2 block bg-gradient-to-r from-amber-500 via-rose-500 to-slate-900 bg-clip-text text-transparent">
+                pour des voix singulières
+              </span>
             </h1>
 
-          {/* Responsive Subtitle */}
-          <div className="max-w-4xl mx-auto mb-6 lg:mb-8 animate-slide-up" style={{ animationDelay: '0.4s' }}>
-            <p className="text-base sm:text-lg lg:text-xl text-gray-700 font-light leading-relaxed mb-3 lg:mb-4 text-balance">
-              Découvrez notre <span className="font-semibold bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">collection exclusive</span> de livres soigneusement sélectionnés
+            <p className="max-w-2xl text-lg text-slate-600 sm:text-xl">
+              Success Publishing offre un accompagnement sur-mesure, de la relecture au lancement, pour transformer chaque manuscrit en expérience de lecture mémorable.
             </p>
-            <p className="text-sm sm:text-base lg:text-lg text-gray-600 font-medium">
-              📖 Leadership • Développement personnel • Business • Inspiration
-            </p>
-          </div>
-        </div>
 
-        {/* Responsive Elegant Action Section */}
-        <div className="flex flex-col items-center animate-scale-in mt-4 lg:mt-6" style={{ animationDelay: '0.6s' }}>
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 lg:gap-6 mb-6 lg:mb-8 w-full max-w-6xl">
-            {[
-              { icon: "📚", label: "Catalogue Complet", desc: "Découvrez tous nos livres", gradient: "from-blue-500/10 to-purple-500/10", border: "border-blue-200" },
-              { icon: "✍️", label: "Publier avec Nous", desc: "Rejoignez nos auteurs", gradient: "from-green-500/10 to-blue-500/10", border: "border-green-200" },
-              { icon: "🎯", label: "Conseils Experts", desc: "Accompagnement premium", gradient: "from-purple-500/10 to-pink-500/10", border: "border-purple-200" },
-              { icon: "🌟", label: "Success Stories", desc: "Témoignages d'auteurs", gradient: "from-orange-500/10 to-red-500/10", border: "border-orange-200" },
-            ].map((item, index) => (
-              <div key={index} className={`bg-gradient-to-br ${item.gradient} backdrop-blur-sm rounded-xl lg:rounded-2xl p-3 lg:p-4 shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105 cursor-pointer border-2 ${item.border} group`}>
-                <div className="text-lg lg:text-2xl mb-1 lg:mb-2 group-hover:scale-110 transition-transform duration-300">{item.icon}</div>
-                <div className="font-semibold text-gray-900 text-xs lg:text-sm mb-1">{item.label}</div>
-                <div className="text-xs lg:text-xs text-gray-600 leading-tight">{item.desc}</div>
-              </div>
-            ))}
-          </div>
-        </div>
+            <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
+              <Button
+                size="lg"
+                className="rounded-full bg-slate-900 px-8 py-6 text-base font-semibold text-white shadow-lg shadow-slate-900/15 transition-all duration-300 hover:-translate-y-0.5 hover:bg-slate-800"
+              >
+                Déposer mon manuscrit
+                <ArrowRight className="ml-2 h-5 w-5" />
+              </Button>
+              <Button
+                variant="ghost"
+                size="lg"
+                className="rounded-full border border-slate-200 px-8 py-6 text-base font-semibold text-slate-900 transition-all duration-300 hover:-translate-y-0.5 hover:bg-slate-50"
+              >
+                Découvrir le catalogue
+              </Button>
+            </div>
 
-        {/* Responsive Publishing Excellence Stats */}
-        <div className="mt-8 lg:mt-12 grid grid-cols-2 lg:grid-cols-4 gap-3 lg:gap-6 pt-6 lg:pt-8 border-t border-gray-200 animate-fade-in w-full max-w-6xl mx-auto" style={{ animationDelay: '0.8s' }}>
-          {[
-            { number: '100+', label: 'Livres Publiés', icon: '📖', gradient: 'from-blue-500/10 to-cyan-500/10', accent: 'text-blue-600' },
-            { number: '50+', label: 'Auteurs Accompagnés', icon: '✍️', gradient: 'from-green-500/10 to-emerald-500/10', accent: 'text-green-600' },
-            { number: '20+', label: 'Partenaires Libraires', icon: '🏪', gradient: 'from-purple-500/10 to-violet-500/10', accent: 'text-purple-600' },
-            { number: '98%', label: 'Satisfaction Client', icon: '💯', gradient: 'from-orange-500/10 to-red-500/10', accent: 'text-orange-600' },
-          ].map((stat, index) => (
-            <div key={index} className={`text-center group cursor-default hover-lift bg-gradient-to-br ${stat.gradient} backdrop-blur-sm rounded-xl lg:rounded-2xl p-3 lg:p-4 shadow-xl hover:shadow-2xl transition-all duration-300 border border-white/50`}>
-              <div className="text-lg lg:text-xl mb-1 lg:mb-2 group-hover:scale-110 transition-transform duration-300">{stat.icon}</div>
-              <div className={`font-playfair text-xl lg:text-2xl xl:text-3xl font-bold ${stat.accent} mb-1 group-hover:scale-110 transition-transform duration-300`}>
-                {stat.number}
-              </div>
-              <div className="text-xs lg:text-xs text-gray-600 font-semibold tracking-wide uppercase leading-tight">
-                {stat.label}
+            <dl className="grid max-w-2xl grid-cols-2 gap-x-10 gap-y-8 text-left sm:gap-x-12">
+              {stats.map((stat) => (
+                <div key={stat.label} className="space-y-1 border-l border-slate-200 pl-6">
+                  <dt className="font-playfair text-3xl font-semibold text-slate-900">
+                    {stat.value}
+                  </dt>
+                  <dd className="text-sm font-medium text-slate-500">
+                    {stat.label}
+                  </dd>
+                </div>
+              ))}
+            </dl>
+          </div>
+
+          <div className="relative order-1 lg:order-2">
+            <div className="absolute -inset-5 -z-10 rounded-[48px] bg-gradient-to-br from-amber-100/30 via-white to-transparent opacity-90 blur-2xl sm:-inset-6" />
+            <div className="relative overflow-hidden rounded-[32px] border border-white/70 bg-white/85 shadow-[0_25px_50px_-25px_rgba(15,23,42,0.35)] backdrop-blur sm:rounded-[40px]">
+              <Image
+                src="/images/kirikou/high-angle-girl-library-reading.jpg"
+                alt="Autrice inspirée dans une bibliothèque lumineuse"
+                width={960}
+                height={1280}
+                className="h-full w-full object-cover"
+                priority
+              />
+
+              <div className="absolute inset-x-4 bottom-4 rounded-3xl border border-white/60 bg-white/90 px-5 py-5 shadow-lg backdrop-blur sm:inset-x-6 sm:bottom-6 sm:px-6">
+                <p className="text-xs font-semibold uppercase tracking-[0.3em] text-amber-600">
+                  Lancement réussi
+                </p>
+                <div className="mt-3 flex items-center gap-4">
+                  <div className="font-playfair text-3xl font-semibold text-slate-900">
+                    +32%
+                  </div>
+                  <p className="max-w-[220px] text-sm text-slate-500">
+                    de ventes sur les six premiers mois grâce à notre stratégie de diffusion premium.
+                  </p>
+                </div>
               </div>
             </div>
-          ))}
+
+            <div className="absolute -top-10 right-4 w-36 rounded-3xl border border-slate-100 bg-white/95 p-4 text-left shadow-xl backdrop-blur sm:right-6 sm:w-40">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.25em] text-amber-600">
+                À la une
+              </p>
+              <p className="mt-3 text-sm font-semibold text-slate-900">
+                &laquo; Le Leadership de Kirikou &raquo;
+              </p>
+              <p className="mt-1 text-xs text-slate-500">
+                Disponible dès maintenant sur toutes les plateformes partenaires.
+              </p>
+            </div>
+          </div>
         </div>
       </div>
     </section>

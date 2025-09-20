@@ -1,103 +1,102 @@
 "use client";
 
+import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { BookOpen, ArrowRight } from 'lucide-react';
+import { ArrowRight, BookOpen } from 'lucide-react';
 import authorsData from '@/data/authors.json';
 
 const AuthorsGrid = () => {
   return (
-    <section id="auteurs" className="py-24 bg-slate-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <h2 className="font-playfair text-3xl lg:text-5xl font-bold text-primary mb-6">
-            Nos Auteurs
+    <section id="auteurs" className="relative overflow-hidden py-24">
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(15,23,42,0.035),_transparent_60%)]" />
+      <div className="absolute inset-x-0 bottom-0 h-64 bg-gradient-to-t from-[#f7f3eb] via-transparent to-transparent" />
+
+      <div className="container relative">
+        <div className="mx-auto max-w-2xl text-center">
+          <p className="text-xs font-semibold uppercase tracking-[0.3em] text-amber-500">
+            Auteurs maison
+          </p>
+          <h2 className="mt-4 font-playfair text-3xl leading-tight text-slate-900 sm:text-4xl lg:text-5xl">
+            Les voix qui façonnent notre catalogue
           </h2>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-            Découvrez les talents qui font la richesse de notre catalogue littéraire
+          <p className="mt-6 text-lg text-slate-600">
+            Une communauté éclectique d’écrivains, d’essayistes et de créatifs accompagnés avec exigence et bienveillance.
           </p>
         </div>
 
-        {/* Authors Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+        <div className="mt-14 grid gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {authorsData.authors.map((author) => (
-            <div key={author.id} className="group">
-              <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 hover-lift text-center">
-                {/* Avatar */}
-                <div className="relative inline-block mb-6">
-                  <div className="w-24 h-24 mx-auto rounded-full overflow-hidden ring-4 ring-white shadow-lg">
-                    <img
-                      src={author.avatar}
-                      alt={`Portrait de ${author.name}`}
-                      className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
-                    />
-                  </div>
-                  
-                  {/* Badges */}
-                  <div className="absolute -top-2 -right-2 flex flex-col gap-1">
-                    {author.isNew && (
-                      <Badge className="bg-accent text-accent-foreground text-xs">
-                        Nouveau
-                      </Badge>
-                    )}
-                    {author.isBestseller && (
-                      <Badge className="bg-primary text-primary-foreground text-xs">
-                        Best-seller
-                      </Badge>
-                    )}
-                  </div>
+            <article
+              key={author.id}
+              className="group flex h-full flex-col items-center rounded-[28px] border border-slate-100 bg-white/80 p-8 text-center shadow-[0_25px_45px_-30px_rgba(15,23,42,0.35)] transition-transform duration-500 hover:-translate-y-2 hover:shadow-[0_45px_60px_-35px_rgba(15,23,42,0.45)]"
+            >
+              <div className="relative mb-6">
+                <div className="relative mx-auto h-24 w-24 overflow-hidden rounded-full border-4 border-white shadow-[0_15px_35px_-20px_rgba(15,23,42,0.45)]">
+                  <Image
+                    src={author.avatar}
+                    alt={`Portrait de ${author.name}`}
+                    fill
+                    className="object-cover transition-transform duration-500 group-hover:scale-[1.08]"
+                    sizes="96px"
+                    unoptimized
+                  />
                 </div>
 
-                {/* Content */}
-                <h3 className="font-playfair text-xl font-bold text-primary mb-2 group-hover:text-accent transition-colors">
-                  {author.name}
-                </h3>
-
-                {/* Genres */}
-                <div className="flex flex-wrap justify-center gap-1 mb-4">
-                  {author.genres.slice(0, 2).map((genre) => (
-                    <span
-                      key={genre}
-                      className="text-xs px-2 py-1 bg-gray-100 text-muted-foreground rounded-full"
-                    >
-                      {genre}
-                    </span>
-                  ))}
-                </div>
-
-                {/* Bio */}
-                <p className="text-sm text-muted-foreground leading-relaxed mb-4 line-clamp-3">
-                  {author.bio}
-                </p>
-
-                {/* Stats & CTA */}
-                <div className="flex items-center justify-between text-sm">
-                  <div className="flex items-center gap-1 text-muted-foreground">
-                    <BookOpen className="h-4 w-4" />
-                    <span>{author.booksCount} livre{author.booksCount > 1 ? 's' : ''}</span>
-                  </div>
-                  
-                  <Button variant="ghost" size="sm" className="text-primary hover:text-accent p-0">
-                    Voir le profil
-                    <ArrowRight className="ml-1 h-4 w-4" />
-                  </Button>
+                <div className="absolute -top-2 -right-2 flex flex-col gap-1">
+                  {author.isNew && (
+                    <Badge className="rounded-full bg-amber-50 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-amber-600">
+                      Nouveau
+                    </Badge>
+                  )}
+                  {author.isBestseller && (
+                    <Badge className="rounded-full bg-slate-900 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-white">
+                      Best-seller
+                    </Badge>
+                  )}
                 </div>
               </div>
-            </div>
+
+              <h3 className="font-playfair text-2xl text-slate-900 transition-colors duration-300 group-hover:text-amber-600">
+                {author.name}
+              </h3>
+
+              <div className="mt-3 flex flex-wrap justify-center gap-2 text-[11px] font-semibold uppercase tracking-[0.2em] text-slate-500">
+                {author.genres.slice(0, 2).map((genre) => (
+                  <span key={genre} className="rounded-full border border-slate-200 px-3 py-1">
+                    {genre}
+                  </span>
+                ))}
+              </div>
+
+              <p className="mt-4 line-clamp-4 text-sm leading-relaxed text-slate-600">
+                {author.bio}
+              </p>
+
+              <div className="mt-6 flex w-full items-center justify-between border-t border-slate-100 pt-4 text-sm text-slate-500">
+                <span className="flex items-center gap-2">
+                  <BookOpen className="h-4 w-4 text-amber-500" />
+                  {author.booksCount} livre{author.booksCount > 1 ? 's' : ''}
+                </span>
+                <Button variant="ghost" size="sm" className="gap-2 rounded-full px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-slate-700 transition-colors duration-300 hover:bg-slate-900 hover:text-white">
+                  Voir le profil
+                  <ArrowRight className="h-4 w-4" />
+                </Button>
+              </div>
+            </article>
           ))}
         </div>
 
-        {/* CTA */}
-        <div className="text-center mt-16">
-          <div className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 max-w-2xl mx-auto">
-            <h3 className="font-playfair text-2xl font-bold text-primary mb-4">
-              Vous souhaitez rejoindre nos auteurs ?
+        <div className="mt-16 text-center">
+          <div className="mx-auto max-w-2xl rounded-[32px] border border-slate-100 bg-white/80 px-8 py-10 shadow-[0_20px_45px_-30px_rgba(15,23,42,0.4)] backdrop-blur">
+            <h3 className="font-playfair text-3xl text-slate-900">
+              Envie de rejoindre notre écurie d’auteurs ?
             </h3>
-            <p className="text-muted-foreground mb-6">
-              Nous accompagnons les nouveaux talents dans leur parcours de publication
+            <p className="mt-4 text-sm text-slate-600">
+              Nous accueillons de nouvelles plumes avec un accompagnement personnalisé, de la conception éditoriale à la stratégie de lancement.
             </p>
-            <Button className="bg-accent hover:bg-accent/90 text-accent-foreground font-semibold px-8 py-3">
-              Devenir auteur
+            <Button className="mt-6 rounded-full bg-amber-500 px-8 py-4 text-sm font-semibold uppercase tracking-[0.2em] text-white transition-transform duration-300 hover:-translate-y-0.5 hover:bg-amber-500/90">
+              Devenir auteur maison
             </Button>
           </div>
         </div>

@@ -1,19 +1,20 @@
 "use client";
 
 import { useState } from 'react';
+import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Star, Filter, ArrowRight } from 'lucide-react';
+import { ArrowRight, Filter, Star } from 'lucide-react';
 import booksData from '@/data/books.json';
 
 const BooksGrid = () => {
   const [selectedGenre, setSelectedGenre] = useState('Tous');
   const [sortBy, setSortBy] = useState('Populaire');
-  
-  const genres = ['Tous', ...new Set(booksData.books.map(book => book.genre))];
-  
-  const filteredBooks = booksData.books.filter(book => 
-    selectedGenre === 'Tous' || book.genre === selectedGenre
+
+  const genres = ['Tous', ...new Set(booksData.books.map((book) => book.genre))];
+
+  const filteredBooks = booksData.books.filter(
+    (book) => selectedGenre === 'Tous' || book.genre === selectedGenre,
   );
 
   const sortedBooks = [...filteredBooks].sort((a, b) => {
@@ -28,28 +29,33 @@ const BooksGrid = () => {
   });
 
   return (
-    <section id="catalogue" className="section-padding mesh-gradient">
-      <div className="container">
-        <div className="text-center mb-16">
-          <h2 className="font-playfair text-responsive-4xl font-bold text-primary mb-6 fade-in-up">
-            Notre Catalogue
+    <section id="catalogue" className="relative overflow-hidden py-24">
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(250,243,232,0.6),_transparent_55%)]" />
+      <div className="absolute inset-x-0 bottom-0 h-64 bg-gradient-to-t from-white via-transparent to-transparent" />
+
+      <div className="container relative">
+        <div className="mx-auto max-w-2xl text-center">
+          <p className="text-xs font-semibold uppercase tracking-[0.3em] text-amber-500">
+            Catalogue signature
+          </p>
+          <h2 className="mt-4 font-playfair text-3xl leading-tight text-slate-900 sm:text-4xl lg:text-5xl">
+            Des ouvrages façonnés avec soin
           </h2>
-          <p className="text-responsive-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed fade-in-up">
-            Découvrez une sélection exceptionnelle d'œuvres publiées par nos auteurs
+          <p className="mt-6 text-lg text-slate-600">
+            Parcourez une sélection raffinée d’œuvres ambitieuses et inspirantes issues de notre maison d’édition.
           </p>
         </div>
 
-        {/* Enhanced Filters */}
-        <div className="flex flex-col lg:flex-row gap-6 mb-16 items-start lg:items-center justify-between glass p-6 rounded-2xl shadow-elegant fade-in-up">
+        <div className="mt-14 flex flex-col gap-6 rounded-[36px] border border-slate-100 bg-white/80 p-8 shadow-[0_20px_45px_-30px_rgba(15,23,42,0.35)] backdrop-blur lg:flex-row lg:items-center lg:justify-between">
           <div className="flex flex-wrap gap-3">
             {genres.map((genre) => (
               <button
                 key={genre}
                 onClick={() => setSelectedGenre(genre)}
-                className={`px-6 py-3 rounded-full text-sm font-medium transition-all duration-300 focus-elegant ${
+                className={`rounded-full px-5 py-2.5 text-xs font-semibold uppercase tracking-[0.18em] transition-all duration-300 focus-elegant ${
                   selectedGenre === genre
-                    ? 'gradient-primary text-primary-foreground shadow-elegant'
-                    : 'bg-white/60 text-muted-foreground hover:bg-white/80 hover:text-primary hover:scale-105 shadow-sm'
+                    ? 'bg-slate-900 text-white shadow-lg shadow-slate-900/20'
+                    : 'border border-slate-200 bg-white/60 text-slate-500 hover:border-slate-300 hover:text-slate-900'
                 }`}
               >
                 {genre}
@@ -57,12 +63,12 @@ const BooksGrid = () => {
             ))}
           </div>
 
-          <div className="flex items-center gap-3 glass px-4 py-3 rounded-xl border border-white/20">
-            <Filter className="h-5 w-5 text-accent" />
+          <div className="flex items-center gap-3 rounded-full border border-slate-200 bg-white/70 px-4 py-2 shadow-sm backdrop-blur">
+            <Filter className="h-4 w-4 text-amber-500" />
             <select
               value={sortBy}
-              onChange={(e) => setSortBy(e.target.value)}
-              className="bg-transparent border-none text-sm font-medium text-primary focus:outline-none focus-elegant"
+              onChange={(event) => setSortBy(event.target.value)}
+              className="bg-transparent text-xs font-semibold uppercase tracking-[0.2em] text-slate-600 focus:outline-none"
             >
               <option value="Populaire">Populaire</option>
               <option value="Note">Note</option>
@@ -71,83 +77,74 @@ const BooksGrid = () => {
           </div>
         </div>
 
-        {/* Enhanced Books Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 lg:gap-10">
+        <div className="mt-14 grid gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {sortedBooks.map((book, index) => (
-            <div key={book.id} className="group cursor-pointer fade-in-up" style={{ animationDelay: `${index * 0.1}s` }}>
-              <div className="bg-white/80 backdrop-blur-sm rounded-2xl overflow-hidden shadow-elegant border border-white/40 hover-lift hover:shadow-hover">
-                {/* Enhanced Cover */}
-                <div className="relative aspect-[3/4] overflow-hidden">
-                  <img
-                    src={book.cover}
-                    alt={`Couverture de ${book.title}`}
-                    className="w-full h-full object-cover book-cover-hover"
-                  />
+            <article
+              key={book.id}
+              className="group relative flex h-full flex-col overflow-hidden rounded-[32px] border border-slate-100 bg-white/80 shadow-[0_25px_45px_-30px_rgba(15,23,42,0.35)] transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_45px_65px_-35px_rgba(15,23,42,0.45)]"
+              style={{ transitionDelay: `${index * 40}ms` }}
+            >
+              <div className="relative aspect-[3/4] overflow-hidden">
+                <Image
+                  src={book.cover}
+                  alt={`Couverture de ${book.title}`}
+                  fill
+                  className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+                  sizes="(min-width:1280px) 280px, (min-width:1024px) 30vw, (min-width:640px) 45vw, 100vw"
+                  unoptimized
+                />
 
-                  {/* Enhanced Badges */}
-                  <div className="absolute top-4 left-4 flex flex-col gap-2">
-                    {book.isNew && (
-                      <Badge className="gradient-accent text-accent-foreground shadow-elegant animate-pulse">
-                        Nouveau
-                      </Badge>
-                    )}
-                    {book.isBestseller && (
-                      <Badge className="gradient-primary text-primary-foreground shadow-elegant">
-                        Best-seller
-                      </Badge>
-                    )}
-                  </div>
-
-                  {/* Hover overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <div className="absolute left-5 top-5 flex flex-col gap-2">
+                  {book.isNew && (
+                    <Badge className="rounded-full bg-white/90 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-amber-600 shadow">
+                      Nouveau
+                    </Badge>
+                  )}
+                  {book.isBestseller && (
+                    <Badge className="rounded-full bg-slate-900/90 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-white shadow">
+                      Best-seller
+                    </Badge>
+                  )}
                 </div>
 
-                {/* Enhanced Content */}
-                <div className="p-6 space-y-4">
-                  <div>
-                    <span className="text-xs font-semibold text-accent uppercase tracking-wider">
-                      {book.genre}
-                    </span>
+                <div className="absolute inset-x-0 bottom-0 h-36 bg-gradient-to-t from-black/45 via-black/5 to-transparent" />
+              </div>
+
+              <div className="flex flex-1 flex-col px-7 pb-7 pt-6">
+                <div className="text-[11px] font-semibold uppercase tracking-[0.25em] text-amber-500">
+                  {book.genre}
+                </div>
+
+                <h3 className="mt-3 font-playfair text-2xl text-slate-900 transition-colors duration-300 group-hover:text-amber-600">
+                  {book.title}
+                </h3>
+
+                <p className="mt-2 text-sm font-medium text-slate-500">par {book.author}</p>
+
+                <p className="mt-4 line-clamp-3 text-sm text-slate-600 leading-relaxed">
+                  {book.description}
+                </p>
+
+                <div className="mt-6 flex items-center justify-between border-t border-slate-100 pt-4">
+                  <div className="flex items-center gap-2 text-slate-700">
+                    <Star className="h-4 w-4 fill-amber-400 text-amber-400" />
+                    <span className="text-sm font-semibold">{book.rating}</span>
                   </div>
-
-                  <h3 className="font-playfair text-responsive-lg font-bold text-primary mb-2 group-hover:text-accent transition-colors duration-300">
-                    {book.title}
-                  </h3>
-
-                  <p className="text-sm text-muted-foreground mb-3 font-medium">
-                    par {book.author}
-                  </p>
-
-                  <p className="text-sm text-muted-foreground leading-relaxed line-clamp-2">
-                    {book.description}
-                  </p>
-
-                  {/* Enhanced Rating & CTA */}
-                  <div className="flex items-center justify-between pt-2">
-                    <div className="flex items-center gap-2">
-                      <Star className="h-4 w-4 text-yellow-400 fill-current" />
-                      <span className="text-sm font-semibold text-foreground">
-                        {book.rating}
-                      </span>
-                    </div>
-
-                    <Button variant="ghost" size="sm" className="text-primary hover:text-accent p-0 group/btn focus-elegant">
-                      Voir la fiche
-                      <ArrowRight className="ml-1 h-4 w-4 transition-transform group-hover/btn:translate-x-1" />
-                    </Button>
-                  </div>
+                  <Button variant="ghost" size="sm" className="gap-2 rounded-full px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-slate-700 transition-all duration-300 hover:bg-slate-900 hover:text-white">
+                    Voir la fiche
+                    <ArrowRight className="h-4 w-4" />
+                  </Button>
                 </div>
               </div>
-            </div>
+            </article>
           ))}
         </div>
 
-        {/* Enhanced Load More */}
-        <div className="text-center mt-16 fade-in-up">
+        <div className="mt-16 text-center">
           <Button
             variant="outline"
             size="lg"
-            className="border-2 border-primary/30 text-primary hover:bg-primary/8 hover:border-primary/50 hover:scale-105 px-10 py-4 rounded-full shadow-elegant hover:shadow-hover transition-all duration-300 focus-elegant"
+            className="rounded-full border border-slate-300 px-10 py-5 text-sm font-semibold uppercase tracking-[0.2em] text-slate-700 transition-all duration-300 hover:-translate-y-0.5 hover:border-slate-400 hover:text-slate-900"
           >
             Voir plus de livres
           </Button>
