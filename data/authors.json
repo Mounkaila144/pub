@@ -2,12 +2,12 @@
   "authors": [
     {
       "id": 1,
-      "name": "Clara Moreau",
-      "bio": "Auteure de romans historiques, passionnée par les grandes sagas familiales. Diplômée en Histoire de la Sorbonne.",
-      "avatar": "https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg?auto=compress&cs=tinysrgb&w=400",
-      "genres": ["Roman historique", "Saga"],
-      "booksCount": 3,
-      "isNew": false,
+      "name": "Moubarak PDM",
+      "bio": "Expert en leadership et développement personnel. Consultant international spécialisé dans la transformation organisationnelle et l'accompagnement des dirigeants. Auteur du best-seller 'Le Leadership de Kirikou'.",
+      "avatar": "/images/kirikou/Image-PDM.png",
+      "genres": ["Leadership", "Développement personnel", "Management"],
+      "booksCount": 1,
+      "isNew": true,
       "isBestseller": true
     },
     {

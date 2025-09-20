@@ -12,7 +12,7 @@ import Footer from '@/components/Footer';
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-white">
+    <main className="min-h-screen bg-gradient-to-br from-slate-50/50 via-white to-amber-50/20">
       <Header />
       <Hero />
       <StepsPublish />

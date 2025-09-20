@@ -10,25 +10,52 @@
 @layer base {
   :root {
     --background: 0 0% 100%;
-    --foreground: 220 20% 15%;
+    --foreground: 220 25% 12%;
     --card: 0 0% 100%;
-    --card-foreground: 220 20% 15%;
+    --card-foreground: 220 25% 12%;
     --popover: 0 0% 100%;
-    --popover-foreground: 220 20% 15%;
-    --primary: 220 40% 20%;
+    --popover-foreground: 220 25% 12%;
+    --primary: 220 50% 15%;
     --primary-foreground: 0 0% 98%;
-    --secondary: 220 10% 96%;
-    --secondary-foreground: 220 20% 15%;
-    --muted: 220 10% 96%;
-    --muted-foreground: 220 10% 45%;
-    --accent: 32 40% 65%;
-    --accent-foreground: 220 20% 15%;
+    --secondary: 220 8% 97%;
+    --secondary-foreground: 220 25% 12%;
+    --muted: 220 8% 96%;
+    --muted-foreground: 220 15% 55%;
+    --accent: 30 50% 58%;
+    --accent-foreground: 220 25% 12%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
-    --border: 220 10% 90%;
-    --input: 220 10% 90%;
-    --ring: 220 40% 20%;
-    --radius: 0.5rem;
+    --border: 220 12% 88%;
+    --input: 220 12% 88%;
+    --ring: 220 50% 15%;
+    --radius: 0.75rem;
+
+    /* Custom variables for enhanced elegance */
+    --gradient-primary: linear-gradient(135deg, hsl(220 50% 15%) 0%, hsl(220 45% 25%) 100%);
+    --gradient-accent: linear-gradient(135deg, hsl(30 50% 58%) 0%, hsl(35 45% 65%) 100%);
+    --shadow-elegant: 0 10px 40px -10px rgba(0, 0, 0, 0.1);
+    --shadow-hover: 0 20px 60px -10px rgba(0, 0, 0, 0.15);
+    --transition-elegant: all 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
+  }
+
+  .dark {
+    --background: 220 25% 8%;
+    --foreground: 220 8% 95%;
+    --card: 220 20% 10%;
+    --card-foreground: 220 8% 95%;
+    --popover: 220 20% 10%;
+    --popover-foreground: 220 8% 95%;
+    --primary: 220 8% 95%;
+    --primary-foreground: 220 25% 8%;
+    --secondary: 220 15% 15%;
+    --secondary-foreground: 220 8% 95%;
+    --muted: 220 15% 15%;
+    --muted-foreground: 220 8% 65%;
+    --accent: 30 50% 58%;
+    --accent-foreground: 220 25% 8%;
+    --border: 220 15% 20%;
+    --input: 220 15% 20%;
+    --ring: 220 8% 95%;
   }
 }
 
@@ -36,42 +63,170 @@
   * {
     @apply border-border;
   }
+
   body {
     @apply bg-background text-foreground;
     font-feature-settings: "rlig" 1, "calt" 1;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
-  
+
   h1, h2, h3, h4, h5, h6 {
     @apply font-playfair;
     line-height: 1.2;
+    letter-spacing: -0.02em;
   }
-  
+
+  /* Enhanced base styles */
+  .container {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
+  /* Background textures and patterns */
   .editorial-grain {
-    background-image: 
-      radial-gradient(circle at 1px 1px, rgba(220,220,220,0.15) 1px, transparent 0);
-    background-size: 20px 20px;
+    background-image:
+      radial-gradient(circle at 1px 1px, rgba(220,220,220,0.08) 1px, transparent 0);
+    background-size: 24px 24px;
   }
-  
+
+  .mesh-gradient {
+    background: radial-gradient(at 40% 20%, hsl(220 50% 15% / 0.03) 0px, transparent 50%),
+                radial-gradient(at 80% 0%, hsl(30 50% 58% / 0.03) 0px, transparent 50%),
+                radial-gradient(at 0% 50%, hsl(220 50% 15% / 0.02) 0px, transparent 50%);
+  }
+
+  /* Elegant animations and interactions */
   .hover-lift {
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: var(--transition-elegant);
+    transform-origin: center;
   }
-  
+
   .hover-lift:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: var(--shadow-hover);
   }
-  
+
   .book-cover-hover {
-    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: var(--transition-elegant);
+    transform-style: preserve-3d;
   }
-  
+
   .book-cover-hover:hover {
-    transform: scale(1.05) rotateY(5deg);
+    transform: scale(1.08) rotateY(8deg) rotateX(2deg);
+    box-shadow: var(--shadow-hover);
+  }
+
+  /* Smooth scroll behavior */
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* Focus states */
+  .focus-elegant:focus-visible {
+    @apply outline-none ring-2 ring-ring ring-offset-2 ring-offset-background;
+    transition: var(--transition-elegant);
+  }
+
+  /* Glass morphism effect */
+  .glass {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  /* Elegant gradients */
+  .gradient-primary {
+    background: var(--gradient-primary);
+  }
+
+  .gradient-accent {
+    background: var(--gradient-accent);
   }
 }
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
+  }
+
+  /* Responsive typography utilities */
+  .text-responsive-xs { font-size: clamp(0.75rem, 2vw, 0.875rem); }
+  .text-responsive-sm { font-size: clamp(0.875rem, 2.5vw, 1rem); }
+  .text-responsive-base { font-size: clamp(1rem, 3vw, 1.125rem); }
+  .text-responsive-lg { font-size: clamp(1.125rem, 4vw, 1.25rem); }
+  .text-responsive-xl { font-size: clamp(1.25rem, 5vw, 1.5rem); }
+  .text-responsive-2xl { font-size: clamp(1.5rem, 6vw, 2rem); }
+  .text-responsive-3xl { font-size: clamp(2rem, 8vw, 3rem); }
+  .text-responsive-4xl { font-size: clamp(2.5rem, 10vw, 4rem); }
+
+  /* Spacing utilities */
+  .container-padding { @apply px-4 sm:px-6 lg:px-8; }
+  .section-padding { @apply py-16 sm:py-20 lg:py-24; }
+  .section-padding-sm { @apply py-12 sm:py-16 lg:py-20; }
+
+  /* Enhanced shadows */
+  .shadow-elegant { box-shadow: var(--shadow-elegant); }
+  .shadow-hover { box-shadow: var(--shadow-hover); }
+
+  /* Elegant borders */
+  .border-elegant { border: 1px solid hsl(var(--border)); }
+  .border-gradient {
+    border: 1px solid transparent;
+    background: linear-gradient(hsl(var(--background)), hsl(var(--background))) padding-box,
+                var(--gradient-accent) border-box;
+  }
+
+  /* Animation utilities */
+  .animate-fade-in {
+    animation: fadeIn 0.6s cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
+  }
+
+  .animate-slide-up {
+    animation: slideUp 0.8s cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
+  }
+
+  .animate-scale-in {
+    animation: scaleIn 0.5s cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  @keyframes slideUp {
+    from {
+      opacity: 0;
+      transform: translateY(2rem);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes scaleIn {
+    from {
+      opacity: 0;
+      transform: scale(0.95);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  /* Intersection Observer animation classes */
+  .fade-in-up {
+    opacity: 0;
+    transform: translateY(2rem);
+    transition: var(--transition-elegant);
+  }
+
+  .fade-in-up.animate {
+    opacity: 1;
+    transform: translateY(0);
   }
 }

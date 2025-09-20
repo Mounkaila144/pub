@@ -28,41 +28,41 @@ const BooksGrid = () => {
   });
 
   return (
-    <section id="catalogue" className="py-24 bg-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-12">
-          <h2 className="font-playfair text-3xl lg:text-5xl font-bold text-primary mb-6">
+    <section id="catalogue" className="section-padding mesh-gradient">
+      <div className="container">
+        <div className="text-center mb-16">
+          <h2 className="font-playfair text-responsive-4xl font-bold text-primary mb-6 fade-in-up">
             Notre Catalogue
           </h2>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+          <p className="text-responsive-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed fade-in-up">
             Découvrez une sélection exceptionnelle d'œuvres publiées par nos auteurs
           </p>
         </div>
 
-        {/* Filters */}
-        <div className="flex flex-col sm:flex-row gap-4 mb-12 items-start sm:items-center justify-between">
-          <div className="flex flex-wrap gap-2">
+        {/* Enhanced Filters */}
+        <div className="flex flex-col lg:flex-row gap-6 mb-16 items-start lg:items-center justify-between glass p-6 rounded-2xl shadow-elegant fade-in-up">
+          <div className="flex flex-wrap gap-3">
             {genres.map((genre) => (
               <button
                 key={genre}
                 onClick={() => setSelectedGenre(genre)}
-                className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
+                className={`px-6 py-3 rounded-full text-sm font-medium transition-all duration-300 focus-elegant ${
                   selectedGenre === genre
-                    ? 'bg-primary text-primary-foreground'
-                    : 'bg-gray-100 text-muted-foreground hover:bg-gray-200'
+                    ? 'gradient-primary text-primary-foreground shadow-elegant'
+                    : 'bg-white/60 text-muted-foreground hover:bg-white/80 hover:text-primary hover:scale-105 shadow-sm'
                 }`}
               >
                 {genre}
               </button>
             ))}
           </div>
-          
-          <div className="flex items-center gap-2">
-            <Filter className="h-4 w-4 text-muted-foreground" />
+
+          <div className="flex items-center gap-3 glass px-4 py-3 rounded-xl border border-white/20">
+            <Filter className="h-5 w-5 text-accent" />
             <select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value)}
-              className="bg-white border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20"
+              className="bg-transparent border-none text-sm font-medium text-primary focus:outline-none focus-elegant"
             >
               <option value="Populaire">Populaire</option>
               <option value="Note">Note</option>
@@ -71,66 +71,69 @@ const BooksGrid = () => {
           </div>
         </div>
 
-        {/* Books Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-          {sortedBooks.map((book) => (
-            <div key={book.id} className="group cursor-pointer">
-              <div className="bg-white rounded-xl overflow-hidden shadow-sm border border-gray-100 hover-lift">
-                {/* Cover */}
+        {/* Enhanced Books Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 lg:gap-10">
+          {sortedBooks.map((book, index) => (
+            <div key={book.id} className="group cursor-pointer fade-in-up" style={{ animationDelay: `${index * 0.1}s` }}>
+              <div className="bg-white/80 backdrop-blur-sm rounded-2xl overflow-hidden shadow-elegant border border-white/40 hover-lift hover:shadow-hover">
+                {/* Enhanced Cover */}
                 <div className="relative aspect-[3/4] overflow-hidden">
                   <img
                     src={book.cover}
                     alt={`Couverture de ${book.title}`}
                     className="w-full h-full object-cover book-cover-hover"
                   />
-                  
-                  {/* Badges */}
-                  <div className="absolute top-3 left-3 flex flex-col gap-2">
+
+                  {/* Enhanced Badges */}
+                  <div className="absolute top-4 left-4 flex flex-col gap-2">
                     {book.isNew && (
-                      <Badge className="bg-accent text-accent-foreground">
+                      <Badge className="gradient-accent text-accent-foreground shadow-elegant animate-pulse">
                         Nouveau
                       </Badge>
                     )}
                     {book.isBestseller && (
-                      <Badge className="bg-primary text-primary-foreground">
+                      <Badge className="gradient-primary text-primary-foreground shadow-elegant">
                         Best-seller
                       </Badge>
                     )}
                   </div>
+
+                  {/* Hover overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 </div>
 
-                {/* Content */}
-                <div className="p-6">
-                  <div className="mb-2">
-                    <span className="text-xs font-medium text-accent uppercase tracking-wide">
+                {/* Enhanced Content */}
+                <div className="p-6 space-y-4">
+                  <div>
+                    <span className="text-xs font-semibold text-accent uppercase tracking-wider">
                       {book.genre}
                     </span>
                   </div>
-                  
-                  <h3 className="font-playfair text-lg font-bold text-primary mb-1 group-hover:text-accent transition-colors">
+
+                  <h3 className="font-playfair text-responsive-lg font-bold text-primary mb-2 group-hover:text-accent transition-colors duration-300">
                     {book.title}
                   </h3>
-                  
-                  <p className="text-sm text-muted-foreground mb-3">
+
+                  <p className="text-sm text-muted-foreground mb-3 font-medium">
                     par {book.author}
                   </p>
-                  
-                  <p className="text-sm text-muted-foreground mb-4 leading-relaxed line-clamp-2">
+
+                  <p className="text-sm text-muted-foreground leading-relaxed line-clamp-2">
                     {book.description}
                   </p>
-                  
-                  {/* Rating & CTA */}
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-1">
+
+                  {/* Enhanced Rating & CTA */}
+                  <div className="flex items-center justify-between pt-2">
+                    <div className="flex items-center gap-2">
                       <Star className="h-4 w-4 text-yellow-400 fill-current" />
-                      <span className="text-sm font-medium text-foreground">
+                      <span className="text-sm font-semibold text-foreground">
                         {book.rating}
                       </span>
                     </div>
-                    
-                    <Button variant="ghost" size="sm" className="text-primary hover:text-accent p-0">
+
+                    <Button variant="ghost" size="sm" className="text-primary hover:text-accent p-0 group/btn focus-elegant">
                       Voir la fiche
-                      <ArrowRight className="ml-1 h-4 w-4" />
+                      <ArrowRight className="ml-1 h-4 w-4 transition-transform group-hover/btn:translate-x-1" />
                     </Button>
                   </div>
                 </div>
@@ -139,9 +142,13 @@ const BooksGrid = () => {
           ))}
         </div>
 
-        {/* Load More */}
-        <div className="text-center mt-12">
-          <Button variant="outline" size="lg" className="border-2 border-primary/20 text-primary hover:bg-primary/5">
+        {/* Enhanced Load More */}
+        <div className="text-center mt-16 fade-in-up">
+          <Button
+            variant="outline"
+            size="lg"
+            className="border-2 border-primary/30 text-primary hover:bg-primary/8 hover:border-primary/50 hover:scale-105 px-10 py-4 rounded-full shadow-elegant hover:shadow-hover transition-all duration-300 focus-elegant"
+          >
             Voir plus de livres
           </Button>
         </div>

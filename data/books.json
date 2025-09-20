@@ -2,13 +2,14 @@
   "books": [
     {
       "id": 1,
-      "title": "Les Murmures du Temps",
-      "author": "Clara Moreau",
-      "genre": "Roman historique",
-      "rating": 4.8,
-      "description": "Une saga familiale bouleversante qui traverse trois générations.",
-      "cover": "https://images.pexels.com/photos/1029141/pexels-photo-1029141.jpeg?auto=compress&cs=tinysrgb&w=400",
-      "isNew": true
+      "title": "Le Leadership de Kirikou",
+      "author": "Moubarak PDM",
+      "genre": "Leadership & Développement personnel",
+      "rating": 4.9,
+      "description": "Découvrez les principes du leadership à travers les aventures inoubliables de Kirikou. Un voyage dans un monde où le courage, la sagesse et l'empathie transforment les défis en opportunités.",
+      "cover": "/images/kirikou/sell/1.jpg",
+      "isNew": true,
+      "isBestseller": true
     },
     {
       "id": 2,
