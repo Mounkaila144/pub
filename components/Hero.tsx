@@ -50,7 +50,7 @@ const Hero = () => {
               </div>
 
               <div className="relative order-1 flex justify-center lg:order-2">
-                <div className="relative max-w-sm">
+                <div className="relative w-full max-w-lg lg:max-w-xl xl:max-w-2xl">
                   <div className="rounded-[36px] bg-[linear-gradient(130deg,var(--bg-3)_0%,rgba(124,205,255,0.65)_50%,rgba(2,26,53,0.9)_100%)] p-[2px] shadow-[0_45px_80px_-50px_rgba(2,26,53,0.8)]">
                     <div className="relative overflow-hidden rounded-[32px] bg-slate-950/30">
                       <Image
