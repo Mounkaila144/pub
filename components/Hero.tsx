@@ -14,14 +14,9 @@ const stats = [
 const Hero = () => {
   return (
     <section className="relative isolate overflow-hidden bg-white">
-      <div className="absolute inset-0">
-        <div className="absolute inset-x-0 -top-40 h-[480px] bg-[radial-gradient(ellipse_at_top,_rgba(244,236,225,0.65),_transparent_70%)]" />
-        <div className="absolute inset-y-0 left-0 w-1/2 bg-[radial-gradient(circle_at_left,_rgba(244,162,89,0.12),_transparent_55%)]" />
-        <div className="absolute -bottom-32 -right-20 h-96 w-96 rounded-full bg-gradient-to-br from-amber-100/60 via-white to-transparent blur-3xl" />
-      </div>
 
-      <div className="container relative pt-28 pb-20 sm:pt-32 sm:pb-24 lg:pt-40 lg:pb-32">
-        <div className="relative overflow-hidden rounded-[44px] border border-white/50 bg-white/65 px-5 py-12 shadow-[0_45px_80px_-50px_rgba(15,23,42,0.6)] backdrop-blur-md sm:px-10 sm:py-16 lg:rounded-[56px] lg:px-16 lg:py-20">
+      <div className="container relative pt-28 pb-20 sm:pt-32 sm:pb-24 lg:pt-20 lg:pb-32">
+        <div className="relative overflow-hidden rounded-[44px] border border-white/50 bg-white/65 px-2 py-5 shadow-[0_45px_80px_-50px_rgba(15,23,42,0.6)] backdrop-blur-md sm:px-10 sm:py-16 lg:rounded-[56px] lg:px-16 lg:py-20">
           <div className="hero-aurora pointer-events-none absolute inset-0" />
           <div className="hero-orb hero-orb--amber pointer-events-none absolute -top-24 -left-20 h-64 w-64 sm:h-72 sm:w-72" />
           <div className="hero-orb hero-orb--rose pointer-events-none absolute top-1/2 -right-16 h-72 w-72 sm:h-80 sm:w-80" />
