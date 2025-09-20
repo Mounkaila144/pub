@@ -10,7 +10,7 @@ const Hero = () => {
     <section className="relative isolate overflow-hidden text-[var(--text)]">
       <div className="absolute inset-0 ocean-hero" aria-hidden="true" />
 
-      <div className="container relative z-10 pt-10 pb-10 sm:pt-32 sm:pb-40 lg:pt-10 lg:pb-20">
+      <div className="container relative z-10 pt-10 pb-40 sm:pt-32 sm:pb-40 lg:pt-40 lg:pb-20">
 
             <div className="relative grid items-center gap-12 lg:grid-cols-[1.05fr,0.95fr] lg:gap-16">
               <div className="order-2 space-y-10 lg:order-1">
@@ -33,7 +33,7 @@ const Hero = () => {
                 <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
                   <Button
                     size="lg"
-                    className="rounded-full bg-white px-9 py-6 text-base font-semibold text-slate-900 shadow-lg shadow-sky-900/20 transition-all duration-300 hover:-translate-y-0.5 hover:bg-sky-100"
+                    className="rounded-full bg-gradient-to-r from-teal-400 via-cyan-400 to-blue-400 px-9 py-6 text-base font-semibold text-white shadow-lg shadow-teal-500/30 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-teal-500/40 hover:scale-105"
                   >
                     Déposer mon manuscrit
                     <ArrowRight className="ml-2 h-5 w-5" />
@@ -41,7 +41,7 @@ const Hero = () => {
                   <Button
                     variant="ghost"
                     size="lg"
-                    className="rounded-full border border-white/40 px-9 py-6 text-base font-semibold text-sky-50 transition-all duration-300 hover:-translate-y-0.5 hover:bg-white/10"
+                    className="rounded-full border-2 border-gradient-to-r from-purple-400 to-pink-400 bg-gradient-to-r from-purple-500/20 via-pink-500/20 to-rose-500/20 backdrop-blur-sm px-9 py-6 text-base font-semibold text-white shadow-lg shadow-purple-500/20 transition-all duration-300 hover:-translate-y-0.5 hover:bg-gradient-to-r hover:from-purple-500/30 hover:via-pink-500/30 hover:to-rose-500/30 hover:shadow-xl hover:shadow-purple-500/30 hover:scale-105"
                   >
                     Découvrir le catalogue
                   </Button>
@@ -92,19 +92,69 @@ const Hero = () => {
             </div>
       </div>
 
-      <div className="ocean-wave-divider pointer-events-none absolute inset-x-0 bottom-0 h-24 sm:h-32" aria-hidden="true">
-        <svg viewBox="0 0 1440 160" preserveAspectRatio="none">
+      {/* Courbures océaniques améliorées */}
+      <div className="ocean-wave-divider pointer-events-none absolute inset-x-0 bottom-0 h-32 sm:h-48 lg:h-64" aria-hidden="true">
+        <svg viewBox="0 0 1440 320" preserveAspectRatio="none" className="absolute bottom-0 w-full h-full">
           <defs>
-            <linearGradient id="hero-wave-gradient" x1="0%" x2="100%" y1="0%" y2="0%">
-              <stop offset="0%" style={{ stopColor: 'rgba(36, 209, 198, 0.45)' }} />
-              <stop offset="45%" style={{ stopColor: 'rgba(124, 205, 255, 0.4)' }} />
-              <stop offset="100%" style={{ stopColor: 'rgba(255, 255, 255, 0.95)' }} />
+            <linearGradient id="ocean-to-cream-gradient" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" style={{ stopColor: 'rgba(12, 101, 133, 0.85)' }} />
+              <stop offset="25%" style={{ stopColor: 'rgba(36, 209, 198, 0.7)' }} />
+              <stop offset="50%" style={{ stopColor: 'rgba(124, 205, 255, 0.5)' }} />
+              <stop offset="75%" style={{ stopColor: 'rgba(240, 249, 255, 0.8)' }} />
+              <stop offset="100%" style={{ stopColor: 'rgba(248, 250, 252, 1)' }} />
+            </linearGradient>
+            <linearGradient id="wave-overlay-gradient" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" style={{ stopColor: 'rgba(241, 245, 249, 0.2)' }} />
+              <stop offset="100%" style={{ stopColor: 'rgba(248, 250, 252, 1)' }} />
             </linearGradient>
           </defs>
+
+          {/* Première vague - fond océanique */}
           <path
-            d="M0,64 C120,96 240,128 360,128 C520,128 640,80 800,80 C960,80 1080,128 1240,128 C1320,128 1380,96 1440,80 L1440,0 L0,0 Z"
-            fill="url(#hero-wave-gradient)"
-          />
+            d="M0,120 C240,80 480,160 720,120 C960,80 1200,140 1440,100 L1440,320 L0,320 Z"
+            fill="url(#ocean-to-cream-gradient)"
+            opacity="0.9"
+          >
+            <animate
+              attributeName="d"
+              dur="8s"
+              repeatCount="indefinite"
+              values="M0,120 C240,80 480,160 720,120 C960,80 1200,140 1440,100 L1440,320 L0,320 Z;
+                      M0,140 C240,100 480,180 720,140 C960,100 1200,160 1440,120 L1440,320 L0,320 Z;
+                      M0,120 C240,80 480,160 720,120 C960,80 1200,140 1440,100 L1440,320 L0,320 Z"
+            />
+          </path>
+
+          {/* Deuxième vague - transition */}
+          <path
+            d="M0,180 C360,140 720,220 1080,180 C1260,160 1350,170 1440,180 L1440,320 L0,320 Z"
+            fill="url(#wave-overlay-gradient)"
+            opacity="0.8"
+          >
+            <animate
+              attributeName="d"
+              dur="12s"
+              repeatCount="indefinite"
+              values="M0,180 C360,140 720,220 1080,180 C1260,160 1350,170 1440,180 L1440,320 L0,320 Z;
+                      M0,200 C360,160 720,240 1080,200 C1260,180 1350,190 1440,200 L1440,320 L0,320 Z;
+                      M0,180 C360,140 720,220 1080,180 C1260,160 1350,170 1440,180 L1440,320 L0,320 Z"
+            />
+          </path>
+
+          {/* Troisième vague - blanc pur */}
+          <path
+            d="M0,240 C480,200 960,280 1440,240 L1440,320 L0,320 Z"
+            fill="rgba(248, 250, 252, 1)"
+          >
+            <animate
+              attributeName="d"
+              dur="15s"
+              repeatCount="indefinite"
+              values="M0,240 C480,200 960,280 1440,240 L1440,320 L0,320 Z;
+                      M0,260 C480,220 960,300 1440,260 L1440,320 L0,320 Z;
+                      M0,240 C480,200 960,280 1440,240 L1440,320 L0,320 Z"
+            />
+          </path>
         </svg>
       </div>
     </section>
