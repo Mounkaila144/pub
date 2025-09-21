@@ -8,6 +8,7 @@ import { Author } from '@/lib/api/authors'
 import { DataTablePaginated, Column, Filter } from '@/components/ui/data-table-paginated'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '@/components/ui/alert-dialog'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
 import { MoreHorizontal } from 'lucide-react'
@@ -41,15 +42,30 @@ export default function AuthorsPage() {
 
   const columns: Column<Author>[] = [
     {
-      key: 'name',
-      label: 'Nom',
+      key: 'first_name',
+      label: 'Auteur',
       sortable: true,
-      render: (author) => `${author.first_name} ${author.last_name}`,
-    },
-    {
-      key: 'email',
-      label: 'Email',
-      sortable: true,
+      render: (author) => {
+        const initials = `${author.first_name?.[0] ?? ''}${author.last_name?.[0] ?? ''}`.toUpperCase()
+
+        return (
+          <div className="flex items-center gap-3">
+            <Avatar className="h-10 w-10">
+              <AvatarImage
+                src={author.photo_url ?? undefined}
+                alt={`${author.first_name} ${author.last_name}`}
+              />
+              <AvatarFallback>{initials || 'A'}</AvatarFallback>
+            </Avatar>
+            <div className="flex flex-col">
+              <span className="font-semibold">{`${author.first_name} ${author.last_name}`}</span>
+              {author.email && (
+                <span className="text-xs text-muted-foreground">{author.email}</span>
+              )}
+            </div>
+          </div>
+        )
+      },
     },
     {
       key: 'is_active',
@@ -78,7 +94,7 @@ export default function AuthorsPage() {
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuItem asChild>
-              <Link href={`/admin/auteurs/${author.id}`}>
+              <Link href={`/admin/auteurs/edit?id=${author.id}`}>
                 <Edit className="h-4 w-4 mr-2" />
                 Modifier
               </Link>
@@ -108,7 +124,7 @@ export default function AuthorsPage() {
               </AlertDialogTrigger>
               <AlertDialogContent>
                 <AlertDialogHeader>
-                  <AlertDialogTitle>Supprimer l'auteur</AlertDialogTitle>
+                  <AlertDialogTitle>Supprimer l&apos;auteur</AlertDialogTitle>
                   <AlertDialogDescription>
                     Êtes-vous sûr de vouloir supprimer cet auteur ? Cette action est irréversible.
                   </AlertDialogDescription>

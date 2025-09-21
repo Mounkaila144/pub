@@ -33,10 +33,10 @@ export function AuthorEditPageClient({ id }: AuthorEditPageClientProps) {
   if (error || !author) {
     return (
       <div className="space-y-6">
-        <h1 className="text-3xl font-bold">Modifier l'auteur</h1>
+        <h1 className="text-3xl font-bold">Modifier l&apos;auteur</h1>
         <Alert variant="destructive">
           <AlertDescription>
-            Erreur lors du chargement de l'auteur
+            Erreur lors du chargement de l&apos;auteur
           </AlertDescription>
         </Alert>
       </div>
@@ -45,7 +45,7 @@ export function AuthorEditPageClient({ id }: AuthorEditPageClientProps) {
 
   return (
     <div className="space-y-6">
-      <h1 className="text-3xl font-bold">Modifier l'auteur</h1>
+      <h1 className="text-3xl font-bold">Modifier l&apos;auteur</h1>
       <AuthorForm author={author} mode="edit" />
     </div>
   )

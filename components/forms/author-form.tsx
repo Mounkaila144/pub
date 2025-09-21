@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useRef } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useRouter } from 'next/navigation'
@@ -15,7 +15,7 @@ import { Switch } from '@/components/ui/switch'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Alert, AlertDescription } from '@/components/ui/alert'
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar'
-import { Upload, X, Trash2 } from 'lucide-react'
+import { Upload, Trash2 } from 'lucide-react'
 
 interface AuthorFormProps {
   author?: Author
@@ -26,6 +26,8 @@ export function AuthorForm({ author, mode }: AuthorFormProps) {
   const router = useRouter()
   const fileInputRef = useRef<HTMLInputElement>(null)
   const [previewUrl, setPreviewUrl] = useState<string | null>(author?.photo_url || null)
+  const previewObjectUrlRef = useRef<string | null>(null)
+  const [pendingPhoto, setPendingPhoto] = useState<File | null>(null)
 
   const { mutate: createAuthor, isPending: isCreating, error: createError } = useCreateAuthor()
   const { mutate: updateAuthor, isPending: isUpdating, error: updateError } = useUpdateAuthor()
@@ -58,11 +60,47 @@ export function AuthorForm({ author, mode }: AuthorFormProps) {
   const isActive = watch('is_active')
   const isPending = isCreating || isUpdating
 
+  useEffect(() => {
+    return () => {
+      if (previewObjectUrlRef.current) {
+        URL.revokeObjectURL(previewObjectUrlRef.current)
+        previewObjectUrlRef.current = null
+      }
+    }
+  }, [])
+
   const onSubmit = (data: AuthorFormData) => {
     if (mode === 'create') {
       createAuthor(data, {
         onSuccess: (newAuthor) => {
-          router.push(`/admin/auteurs/${newAuthor.id}`)
+          const redirectTo = `/admin/auteurs/edit?id=${newAuthor.id}`
+
+          if (pendingPhoto) {
+            uploadPhoto(
+              { id: newAuthor.id, file: pendingPhoto },
+              {
+                onSuccess: (updatedAuthor) => {
+                  if (previewObjectUrlRef.current) {
+                    URL.revokeObjectURL(previewObjectUrlRef.current)
+                    previewObjectUrlRef.current = null
+                  }
+                  setPendingPhoto(null)
+                  setPreviewUrl(updatedAuthor.photo_url || null)
+                  router.push(redirectTo)
+                },
+                onError: () => {
+                  if (previewObjectUrlRef.current) {
+                    URL.revokeObjectURL(previewObjectUrlRef.current)
+                    previewObjectUrlRef.current = null
+                  }
+                  setPendingPhoto(null)
+                  router.push(redirectTo)
+                },
+              }
+            )
+          } else {
+            router.push(redirectTo)
+          }
         },
       })
     } else if (author) {
@@ -76,24 +114,59 @@ export function AuthorForm({ author, mode }: AuthorFormProps) {
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0]
-    if (file && author) {
-      const url = URL.createObjectURL(file)
-      setPreviewUrl(url)
+    if (!file) return
 
+    if (previewObjectUrlRef.current) {
+      URL.revokeObjectURL(previewObjectUrlRef.current)
+      previewObjectUrlRef.current = null
+    }
+
+    const objectUrl = URL.createObjectURL(file)
+    previewObjectUrlRef.current = objectUrl
+    setPreviewUrl(objectUrl)
+
+    if (mode === 'edit' && author) {
       uploadPhoto({ id: author.id, file }, {
         onSuccess: (updatedAuthor) => {
+          if (previewObjectUrlRef.current) {
+            URL.revokeObjectURL(previewObjectUrlRef.current)
+            previewObjectUrlRef.current = null
+          }
+          setPendingPhoto(null)
           setPreviewUrl(updatedAuthor.photo_url || null)
-          URL.revokeObjectURL(url)
         },
         onError: () => {
+          if (previewObjectUrlRef.current) {
+            URL.revokeObjectURL(previewObjectUrlRef.current)
+            previewObjectUrlRef.current = null
+          }
+          setPendingPhoto(null)
           setPreviewUrl(author.photo_url || null)
-          URL.revokeObjectURL(url)
         },
       })
+    } else {
+      setPendingPhoto(file)
+    }
+
+    if (fileInputRef.current) {
+      fileInputRef.current.value = ''
     }
   }
 
   const handleDeletePhoto = () => {
+    if (mode === 'create') {
+      setPendingPhoto(null)
+      setPreviewUrl(null)
+      if (previewObjectUrlRef.current) {
+        URL.revokeObjectURL(previewObjectUrlRef.current)
+        previewObjectUrlRef.current = null
+      }
+      if (fileInputRef.current) {
+        fileInputRef.current.value = ''
+      }
+      return
+    }
+
     if (author?.photo_url) {
       deletePhoto(author.id, {
         onSuccess: () => {
@@ -242,7 +315,7 @@ export function AuthorForm({ author, mode }: AuthorFormProps) {
                     type="button"
                     variant="outline"
                     onClick={() => fileInputRef.current?.click()}
-                    disabled={isUploading || mode === 'create'}
+                    disabled={isUploading}
                     className="w-full"
                   >
                     <Upload className="h-4 w-4 mr-2" />
@@ -254,7 +327,7 @@ export function AuthorForm({ author, mode }: AuthorFormProps) {
                       type="button"
                       variant="outline"
                       onClick={handleDeletePhoto}
-                      disabled={isDeleting || mode === 'create'}
+                      disabled={mode === 'edit' ? (isDeleting || isUploading) : false}
                       className="w-full text-red-600 hover:text-red-700"
                     >
                       <Trash2 className="h-4 w-4 mr-2" />
@@ -273,7 +346,7 @@ export function AuthorForm({ author, mode }: AuthorFormProps) {
 
                 {mode === 'create' && (
                   <p className="text-sm text-gray-500 text-center">
-                    La photo pourra être ajoutée après la création
+                    La photo sera téléversée une fois l&apos;auteur créé
                   </p>
                 )}
               </div>
