@@ -39,6 +39,7 @@ export function AuthorForm({ author, mode }: AuthorFormProps) {
     handleSubmit,
     watch,
     setValue,
+    reset,
     formState: { errors },
   } = useForm<AuthorFormData>({
     resolver: zodResolver(authorFormSchema),
@@ -68,6 +69,32 @@ export function AuthorForm({ author, mode }: AuthorFormProps) {
       }
     }
   }, [])
+
+  useEffect(() => {
+    if (mode !== 'edit' || !author) return
+
+    if (previewObjectUrlRef.current) {
+      URL.revokeObjectURL(previewObjectUrlRef.current)
+      previewObjectUrlRef.current = null
+    }
+
+    setPendingPhoto(null)
+    setPreviewUrl(author.photo_url || null)
+
+    reset({
+      first_name: author.first_name || '',
+      last_name: author.last_name || '',
+      bio: author.bio || '',
+      website_url: author.website_url || '',
+      socials: {
+        twitter: author.socials?.twitter || '',
+        facebook: author.socials?.facebook || '',
+        instagram: author.socials?.instagram || '',
+        linkedin: author.socials?.linkedin || '',
+      },
+      is_active: author.is_active ?? true,
+    })
+  }, [author, mode, reset])
 
   const onSubmit = (data: AuthorFormData) => {
     if (mode === 'create') {

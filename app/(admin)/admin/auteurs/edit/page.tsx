@@ -1,21 +1,29 @@
 'use client'
 
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { AuthorEditPageClient } from '@/components/admin/author-edit-page-client'
 
 export default function EditAuthorPage() {
   const searchParams = useSearchParams()
   const router = useRouter()
-  const authorId = searchParams.get('id')
+  const [authorId, setAuthorId] = useState<string | null>(null)
+  const [isReady, setIsReady] = useState(false)
 
   useEffect(() => {
+    const id = searchParams.get('id')
+    setAuthorId(id)
+    setIsReady(true)
+  }, [searchParams])
+
+  useEffect(() => {
+    if (!isReady) return
     if (!authorId) {
       router.replace('/admin/auteurs')
     }
-  }, [authorId, router])
+  }, [authorId, isReady, router])
 
-  if (!authorId) {
+  if (!isReady || !authorId) {
     return null
   }
 

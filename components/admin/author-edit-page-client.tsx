@@ -46,7 +46,7 @@ export function AuthorEditPageClient({ id }: AuthorEditPageClientProps) {
   return (
     <div className="space-y-6">
       <h1 className="text-3xl font-bold">Modifier l&apos;auteur</h1>
-      <AuthorForm author={author} mode="edit" />
+      <AuthorForm key={author.id} author={author} mode="edit" />
     </div>
   )
 }
