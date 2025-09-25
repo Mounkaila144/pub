@@ -33,6 +33,7 @@ Route::middleware('throttle:60,1')->group(function () {
     });
 
     Route::middleware(['jwt.auth', 'throttle:120,1'])->prefix('admin')->group(function () {
+        Route::get('/stats', [App\Http\Controllers\StatsController::class, 'index']);
 
         Route::prefix('authors')->group(function () {
             Route::get('/', [App\Http\Controllers\AuthorController::class, 'index']);
@@ -45,6 +46,8 @@ Route::middleware('throttle:60,1')->group(function () {
         });
 
         Route::prefix('books')->group(function () {
+            Route::get('/', [App\Http\Controllers\BookController::class, 'index']);
+            Route::get('{book}', [App\Http\Controllers\BookController::class, 'showAdmin']);
             Route::post('/', [App\Http\Controllers\BookController::class, 'store']);
             Route::put('{book}', [App\Http\Controllers\BookController::class, 'update']);
             Route::delete('{book}', [App\Http\Controllers\BookController::class, 'destroy']);

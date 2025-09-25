@@ -143,15 +143,15 @@ export function AuthorsMultiSelect({ value, onChange, className = '', error }: A
       ) : (
         <DragDropContext onDragEnd={handleDragEnd}>
           <Droppable droppableId="authors">
-            {(provided) => (
+            {(provided: any) => (
               <div
                 {...provided.droppableProps}
                 ref={provided.innerRef}
                 className="space-y-2"
               >
                 {value.map((author, index) => (
-                  <Draggable key={author.id} draggableId={author.id} index={index}>
-                    {(provided, snapshot) => (
+                  <Draggable key={author.id} draggableId={author.id.toString()} index={index}>
+                    {(provided: any, snapshot: any) => (
                       <div
                         ref={provided.innerRef}
                         {...provided.draggableProps}

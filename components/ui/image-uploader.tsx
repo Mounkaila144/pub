@@ -41,8 +41,9 @@ export function ImageUploader({
     setError(null)
 
     // Validate file type
-    if (!file.type.startsWith('image/')) {
-      setError('Veuillez sélectionner un fichier image valide')
+    const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp']
+    if (!allowedTypes.includes(file.type)) {
+      setError('Veuillez sélectionner un fichier image valide (JPG, PNG, GIF, WEBP)')
       return
     }
 
@@ -138,7 +139,7 @@ export function ImageUploader({
             <ImageIcon className="h-12 w-12 text-gray-400 mb-2" />
             <p className="text-sm text-gray-600">{placeholder}</p>
             <p className="text-xs text-gray-500 mt-1">
-              Max {maxSizeMB} MB - PNG, JPG, WEBP
+              Max {maxSizeMB} MB - Formats acceptés : JPEG, PNG, GIF, WEBP
             </p>
           </div>
         )}

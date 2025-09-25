@@ -87,6 +87,12 @@ class BookController extends Controller
         return new BookResource($book);
     }
 
+    public function showAdmin(Book $book)
+    {
+        $book->load('authors');
+        return new BookResource($book);
+    }
+
     public function update(UpdateBookRequest $request, Book $book): JsonResponse
     {
         $data = $request->validated();
@@ -122,7 +128,7 @@ class BookController extends Controller
     public function storeCover(Request $request, Book $book): JsonResponse
     {
         $request->validate([
-            'cover' => 'required|image|max:5120'
+            'cover' => 'required|image|mimes:jpeg,jpg,png,gif,webp|max:5120'
         ]);
 
         if ($book->cover_path) {

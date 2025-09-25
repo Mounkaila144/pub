@@ -1,17 +1,18 @@
 'use client'
 
-import { useState } from 'react'
-import Link from 'next/link'
+import React, { useState } from 'react'
 import { Plus, Edit, Trash2, Eye, EyeOff } from 'lucide-react'
-import { useAuthorsList, useDeleteAuthor, useToggleAuthorActive } from '@/lib/hooks/use-authors'
+import { useAuthorsList, useDeleteAuthor, useToggleAuthorActive, useCreateAuthor, useUpdateAuthor, useAuthor } from '@/lib/hooks/use-authors'
 import { Author } from '@/lib/api/authors'
 import { DataTablePaginated, Column, Filter } from '@/components/ui/data-table-paginated'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog'
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '@/components/ui/alert-dialog'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
 import { MoreHorizontal } from 'lucide-react'
+import { AuthorForm } from '@/components/forms/author-form'
 
 export default function AuthorsPage() {
   const [currentPage, setCurrentPage] = useState(1)
@@ -19,8 +20,10 @@ export default function AuthorsPage() {
   const [isActiveFilter, setIsActiveFilter] = useState<boolean | undefined>()
   const [sortBy, setSortBy] = useState<string>('')
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc')
+  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false)
+  const [editingAuthor, setEditingAuthor] = useState<Author | null>(null)
 
-  const { data, isLoading } = useAuthorsList({
+  const { data, isLoading, refetch } = useAuthorsList({
     page: currentPage,
     per_page: 10,
     search: search || undefined,
@@ -29,15 +32,53 @@ export default function AuthorsPage() {
     sort_order: sortOrder,
   })
 
+  // Refetch data when component mounts to ensure fresh data
+  React.useEffect(() => {
+    refetch()
+  }, [refetch])
+
   const { mutate: deleteAuthor, isPending: isDeleting } = useDeleteAuthor()
   const { mutate: toggleActive, isPending: isToggling } = useToggleAuthorActive()
+  const { mutate: createAuthor, isPending: isCreating } = useCreateAuthor()
+  const { mutate: updateAuthor, isPending: isUpdating } = useUpdateAuthor()
 
   const handleDelete = (id: string) => {
-    deleteAuthor(id)
+    deleteAuthor(id, {
+      onSuccess: () => {
+        refetch()
+      },
+    })
   }
 
   const handleToggleActive = (id: string, isActive: boolean) => {
-    toggleActive({ id, is_active: !isActive })
+    toggleActive({ id, is_active: !isActive }, {
+      onSuccess: () => {
+        refetch()
+      },
+    })
+  }
+
+  const handleCreate = (data: any) => {
+    createAuthor(data, {
+      onSuccess: () => {
+        setIsCreateModalOpen(false)
+        refetch()
+      },
+    })
+  }
+
+  const handleUpdate = (data: any) => {
+    if (!editingAuthor) return
+
+    updateAuthor(
+      { id: editingAuthor.id, data },
+      {
+        onSuccess: () => {
+          setEditingAuthor(null)
+          refetch()
+        },
+      }
+    )
   }
 
   const columns: Column<Author>[] = [
@@ -93,11 +134,9 @@ export default function AuthorsPage() {
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
-            <DropdownMenuItem asChild>
-              <Link href={`/admin/auteurs/edit?id=${author.id}`}>
-                <Edit className="h-4 w-4 mr-2" />
-                Modifier
-              </Link>
+            <DropdownMenuItem onClick={() => setEditingAuthor(author)}>
+              <Edit className="h-4 w-4 mr-2" />
+              Modifier
             </DropdownMenuItem>
             <DropdownMenuItem
               onClick={() => handleToggleActive(author.id, author.is_active)}
@@ -180,30 +219,50 @@ export default function AuthorsPage() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <h1 className="text-3xl font-bold">Auteurs</h1>
-        <Button asChild>
-          <Link href="/admin/auteurs/new">
-            <Plus className="h-4 w-4 mr-2" />
-            Nouvel auteur
-          </Link>
-        </Button>
+        <Dialog open={isCreateModalOpen} onOpenChange={setIsCreateModalOpen}>
+          <DialogTrigger asChild>
+            <Button>
+              <Plus className="h-4 w-4 mr-2" />
+              Nouvel auteur
+            </Button>
+          </DialogTrigger>
+          <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
+            <DialogHeader>
+              <DialogTitle>Nouvel auteur</DialogTitle>
+            </DialogHeader>
+            <AuthorForm mode="create" onSuccess={() => setIsCreateModalOpen(false)} onCancel={() => setIsCreateModalOpen(false)} />
+          </DialogContent>
+        </Dialog>
       </div>
 
       <DataTablePaginated
-        columns={columns}
-        data={data?.data || []}
-        isLoading={isLoading}
-        currentPage={data?.meta.current_page || 1}
-        totalPages={data?.meta.last_page || 1}
-        total={data?.meta.total || 0}
-        perPage={data?.meta.per_page || 10}
-        onPageChange={setCurrentPage}
-        onSearch={handleSearch}
-        onFilter={handleFilter}
-        onSort={handleSort}
-        filters={filters}
-        searchPlaceholder="Rechercher par nom ou email..."
-        emptyMessage="Aucun auteur trouvé"
-      />
-    </div>
-  )
+       columns={columns}
+       data={data?.data || []}
+       isLoading={isLoading}
+       currentPage={data?.meta.current_page || 1}
+       totalPages={data?.meta.last_page || 1}
+       total={data?.meta.total || 0}
+       perPage={data?.meta.per_page || 10}
+       onPageChange={setCurrentPage}
+       onSearch={handleSearch}
+       onFilter={handleFilter}
+       onSort={handleSort}
+       filters={filters}
+       searchPlaceholder="Rechercher par nom ou email..."
+       emptyMessage="Aucun auteur trouvé"
+     />
+
+     {/* Edit Modal */}
+     <Dialog open={!!editingAuthor} onOpenChange={() => setEditingAuthor(null)}>
+       <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
+         <DialogHeader>
+           <DialogTitle>Modifier l'auteur</DialogTitle>
+         </DialogHeader>
+         {editingAuthor && (
+           <AuthorForm mode="edit" author={editingAuthor} onSuccess={() => setEditingAuthor(null)} onCancel={() => setEditingAuthor(null)} />
+         )}
+       </DialogContent>
+     </Dialog>
+   </div>
+ )
 }

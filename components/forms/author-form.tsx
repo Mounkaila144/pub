@@ -6,6 +6,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useRouter } from 'next/navigation'
 import { Author } from '@/lib/api/authors'
 import { useCreateAuthor, useUpdateAuthor, useUploadAuthorPhoto, useDeleteAuthorPhoto } from '@/lib/hooks/use-authors'
+import { useQueryClient } from '@tanstack/react-query'
 import { authorFormSchema, AuthorFormData } from '@/lib/validations/author'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -20,14 +21,16 @@ import { Upload, Trash2 } from 'lucide-react'
 interface AuthorFormProps {
   author?: Author
   mode: 'create' | 'edit'
+  onSuccess?: () => void
+  onCancel?: () => void
 }
 
-export function AuthorForm({ author, mode }: AuthorFormProps) {
-  const router = useRouter()
+export function AuthorForm({ author, mode, onSuccess, onCancel }: AuthorFormProps) {
   const fileInputRef = useRef<HTMLInputElement>(null)
   const [previewUrl, setPreviewUrl] = useState<string | null>(author?.photo_url || null)
   const previewObjectUrlRef = useRef<string | null>(null)
   const [pendingPhoto, setPendingPhoto] = useState<File | null>(null)
+  const queryClient = useQueryClient()
 
   const { mutate: createAuthor, isPending: isCreating, error: createError } = useCreateAuthor()
   const { mutate: updateAuthor, isPending: isUpdating, error: updateError } = useUpdateAuthor()
@@ -100,7 +103,9 @@ export function AuthorForm({ author, mode }: AuthorFormProps) {
     if (mode === 'create') {
       createAuthor(data, {
         onSuccess: (newAuthor) => {
-          const redirectTo = `/admin/auteurs/edit?id=${newAuthor.id}`
+          // Invalidate cache to refresh the authors list
+          queryClient.invalidateQueries({ queryKey: ['authors'] })
+          queryClient.invalidateQueries({ queryKey: ['stats'] })
 
           if (pendingPhoto) {
             uploadPhoto(
@@ -113,7 +118,10 @@ export function AuthorForm({ author, mode }: AuthorFormProps) {
                   }
                   setPendingPhoto(null)
                   setPreviewUrl(updatedAuthor.photo_url || null)
-                  router.push(redirectTo)
+                  // Invalidate cache again to refresh with the photo
+                  queryClient.invalidateQueries({ queryKey: ['authors'] })
+                  queryClient.invalidateQueries({ queryKey: ['authors', updatedAuthor.id] })
+                  onSuccess?.()
                 },
                 onError: () => {
                   if (previewObjectUrlRef.current) {
@@ -121,19 +129,24 @@ export function AuthorForm({ author, mode }: AuthorFormProps) {
                     previewObjectUrlRef.current = null
                   }
                   setPendingPhoto(null)
-                  router.push(redirectTo)
+                  // Invalidate cache even on error to refresh the authors list
+                  queryClient.invalidateQueries({ queryKey: ['authors'] })
+                  onSuccess?.()
                 },
               }
             )
           } else {
-            router.push(redirectTo)
+            onSuccess?.()
           }
         },
       })
     } else if (author) {
       updateAuthor({ id: author.id, data }, {
         onSuccess: () => {
-          router.push('/admin/auteurs')
+          // Invalidate cache to refresh the authors list
+          queryClient.invalidateQueries({ queryKey: ['authors'] })
+          queryClient.invalidateQueries({ queryKey: ['authors', author.id] })
+          onSuccess?.()
         },
       })
     }
@@ -161,6 +174,8 @@ export function AuthorForm({ author, mode }: AuthorFormProps) {
           }
           setPendingPhoto(null)
           setPreviewUrl(updatedAuthor.photo_url || null)
+          // Invalidate cache to refresh the authors list
+          queryClient.invalidateQueries({ queryKey: ['authors'] })
         },
         onError: () => {
           if (previewObjectUrlRef.current) {
@@ -169,6 +184,8 @@ export function AuthorForm({ author, mode }: AuthorFormProps) {
           }
           setPendingPhoto(null)
           setPreviewUrl(author.photo_url || null)
+          // Invalidate cache even on error to refresh the authors list
+          queryClient.invalidateQueries({ queryKey: ['authors'] })
         },
       })
     } else {
@@ -198,6 +215,8 @@ export function AuthorForm({ author, mode }: AuthorFormProps) {
       deletePhoto(author.id, {
         onSuccess: () => {
           setPreviewUrl(null)
+          // Invalidate cache to refresh the authors list
+          queryClient.invalidateQueries({ queryKey: ['authors'] })
         },
       })
     }
@@ -405,7 +424,7 @@ export function AuthorForm({ author, mode }: AuthorFormProps) {
             <Button
               type="button"
               variant="outline"
-              onClick={() => router.push('/admin/auteurs')}
+              onClick={onCancel}
               className="w-full"
             >
               Annuler
