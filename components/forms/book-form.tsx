@@ -15,6 +15,8 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Alert, AlertDescription } from '@/components/ui/alert'
 import { AuthorsMultiSelect, SelectedAuthor } from '@/components/ui/authors-multi-select'
 import { Upload, Trash2 } from 'lucide-react'
+import { compressMultipleImages, getImageInfo } from '@/lib/image-compression'
+import { toast } from 'sonner'
 
 interface BookFormData {
   title: string
@@ -45,6 +47,7 @@ export function BookForm({ book, mode, onSuccess, onCancel }: BookFormProps) {
   const [previewUrl, setPreviewUrl] = useState<string | null>(book?.cover_url || null)
   const previewObjectUrlRef = useRef<string | null>(null)
   const [pendingCover, setPendingCover] = useState<File | null>(null)
+  const [compressing, setCompressing] = useState(false)
   const queryClient = useQueryClient()
 
   const { data: authorsData } = useAuthorsList({ per_page: 100 })
@@ -178,46 +181,83 @@ export function BookForm({ book, mode, onSuccess, onCancel }: BookFormProps) {
     }
   }
 
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0]
     if (!file) return
 
-    if (previewObjectUrlRef.current) {
-      URL.revokeObjectURL(previewObjectUrlRef.current)
-      previewObjectUrlRef.current = null
-    }
+    try {
+      setCompressing(true)
 
-    const objectUrl = URL.createObjectURL(file)
-    previewObjectUrlRef.current = objectUrl
-    setPreviewUrl(objectUrl)
+      // Afficher les informations de l'image originale
+      const info = getImageInfo(file)
+      console.log(`Image originale: ${info.name} - ${info.sizeFormatted}`)
 
-    if (mode === 'edit' && book) {
-      uploadCover({ id: book.id, file }, {
-        onSuccess: (updatedBook) => {
-          if (previewObjectUrlRef.current) {
-            URL.revokeObjectURL(previewObjectUrlRef.current)
-            previewObjectUrlRef.current = null
-          }
-          setPendingCover(null)
-          setPreviewUrl(updatedBook.cover_url || null)
-          queryClient.invalidateQueries({ queryKey: ['books'] })
-        },
-        onError: () => {
-          if (previewObjectUrlRef.current) {
-            URL.revokeObjectURL(previewObjectUrlRef.current)
-            previewObjectUrlRef.current = null
-          }
-          setPendingCover(null)
-          setPreviewUrl(book.cover_url || null)
-          queryClient.invalidateQueries({ queryKey: ['books'] })
-        },
+      // Notification de début de compression
+      toast.info('Compression de l\'image en cours...')
+
+      // COMPRESSION DE L'IMAGE
+      const compressedFile = await compressMultipleImages([file], {
+        maxSizeMB: 0.2,
+        maxWidthOrHeight: 1920,
+        quality: 0.7,
       })
-    } else {
-      setPendingCover(file)
-    }
 
-    if (fileInputRef.current) {
-      fileInputRef.current.value = ''
+      // Afficher les informations de l'image compressée
+      const compressedInfo = getImageInfo(compressedFile[0])
+      console.log(`Image compressée: ${compressedInfo.name} - ${compressedInfo.sizeFormatted}`)
+
+      setCompressing(false)
+
+      // Calculer l'espace économisé
+      const savedSize = file.size - compressedFile[0].size
+      const savedSizeMB = (savedSize / (1024 * 1024)).toFixed(2)
+
+      if (previewObjectUrlRef.current) {
+        URL.revokeObjectURL(previewObjectUrlRef.current)
+        previewObjectUrlRef.current = null
+      }
+
+      const objectUrl = URL.createObjectURL(compressedFile[0])
+      previewObjectUrlRef.current = objectUrl
+      setPreviewUrl(objectUrl)
+
+      if (mode === 'edit' && book) {
+        uploadCover({ id: book.id, file: compressedFile[0] }, {
+          onSuccess: (updatedBook) => {
+            if (previewObjectUrlRef.current) {
+              URL.revokeObjectURL(previewObjectUrlRef.current)
+              previewObjectUrlRef.current = null
+            }
+            setPendingCover(null)
+            setPreviewUrl(updatedBook.cover_url || null)
+            queryClient.invalidateQueries({ queryKey: ['books'] })
+          },
+          onError: () => {
+            if (previewObjectUrlRef.current) {
+              URL.revokeObjectURL(previewObjectUrlRef.current)
+              previewObjectUrlRef.current = null
+            }
+            setPendingCover(null)
+            setPreviewUrl(book.cover_url || null)
+            queryClient.invalidateQueries({ queryKey: ['books'] })
+          },
+        })
+      } else {
+        setPendingCover(compressedFile[0])
+      }
+
+      // Notification de succès avec économie d'espace
+      toast.success(
+        `Image compressée avec succès (${savedSizeMB} MB économisés)`
+      )
+
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : 'Erreur lors de la compression de l\'image')
+    } finally {
+      setCompressing(false)
+      if (fileInputRef.current) {
+        fileInputRef.current.value = ''
+      }
     }
   }
 
@@ -385,11 +425,11 @@ export function BookForm({ book, mode, onSuccess, onCancel }: BookFormProps) {
                 type="button"
                 variant="outline"
                 onClick={() => fileInputRef.current?.click()}
-                disabled={isUploading}
+                disabled={isUploading || compressing}
                 className="w-full"
               >
                 <Upload className="h-4 w-4 mr-2" />
-                {isUploading ? 'Upload...' : previewUrl ? 'Remplacer' : 'Ajouter'}
+                {compressing ? 'Compression...' : isUploading ? 'Upload...' : previewUrl ? 'Remplacer' : 'Ajouter'}
               </Button>
 
               {previewUrl && (
@@ -414,11 +454,14 @@ export function BookForm({ book, mode, onSuccess, onCancel }: BookFormProps) {
               className="hidden"
             />
 
-            {mode === 'create' && (
-              <p className="text-sm text-gray-500 text-center">
-                La couverture sera téléversée une fois le livre créé
-              </p>
-            )}
+            <div className="text-xs text-gray-500 text-center space-y-1">
+              <p>• Formats acceptés : JPEG, PNG, WebP</p>
+              <p>• Les images seront automatiquement compressées à moins de 200KB</p>
+              <p>• Résolution maximale : 1920px, qualité optimisée à 70%</p>
+              {mode === 'create' && (
+                <p>• La couverture sera téléversée une fois le livre créé</p>
+              )}
+            </div>
           </div>
         </CardContent>
       </Card>
