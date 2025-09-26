@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation'
 import { useLogout } from '@/lib/hooks/use-logout'
 import { useAuthMe } from '@/lib/hooks/use-auth-me'
 import { Button } from '@/components/ui/button'
-import { LogOut, Book, Users, BarChart3 } from 'lucide-react'
+import { LogOut, Book, Users, BarChart3, Handshake } from 'lucide-react'
 
 export function AdminHeader() {
   const router = useRouter()
@@ -48,6 +48,13 @@ export function AdminHeader() {
             >
               <Book className="h-4 w-4" />
               <span>Livres</span>
+            </Link>
+            <Link
+              href="/admin/partenaires"
+              className="flex items-center space-x-2 text-gray-600 hover:text-gray-900"
+            >
+              <Handshake className="h-4 w-4" />
+              <span>Partenaires</span>
             </Link>
           </nav>
         </div>

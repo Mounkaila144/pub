@@ -1,97 +1,115 @@
 "use client";
 
 import Image from 'next/image';
-import { Badge } from '@/components/ui/badge';
-import partnersData from '@/data/partners.json';
+import { ExternalLink } from 'lucide-react';
+import { usePartnersList } from '@/lib/hooks/use-partners';
+import { Skeleton } from '@/components/ui/skeleton';
 
 const PartnersGrid = () => {
-  const categories = [...new Set(partnersData.partners.map((partner) => partner.category))];
+  const { data: partnersResponse, isLoading, error } = usePartnersList({
+    per_page: 20,
+    is_active: true
+  });
+
+  const partners = partnersResponse?.data || [];
+
+  if (isLoading) {
+    return (
+      <section id="partenaires" className="relative overflow-hidden py-24">
+        <div className="container relative">
+          <div className="mx-auto max-w-2xl text-center mb-16">
+            <Skeleton className="h-4 w-32 mx-auto mb-4" />
+            <Skeleton className="h-8 w-96 mx-auto mb-6" />
+            <Skeleton className="h-4 w-80 mx-auto" />
+          </div>
+
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-8">
+            {[...Array(6)].map((_, i) => (
+              <div key={i} className="flex flex-col items-center text-center">
+                <Skeleton className="h-20 w-20 rounded-full mb-4" />
+                <Skeleton className="h-4 w-24" />
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  if (error) {
+    return (
+      <section id="partenaires" className="relative overflow-hidden py-24">
+        <div className="container relative">
+          <div className="text-center">
+            <p className="text-red-500">Erreur lors du chargement des partenaires</p>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  if (partners.length === 0) {
+    return null;
+  }
 
   return (
     <section id="partenaires" className="relative overflow-hidden py-24">
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(244,236,225,0.6),_transparent_60%)]" />
-      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-amber-200/60 to-transparent" />
-      <div className="absolute inset-x-0 bottom-0 h-64 bg-gradient-to-t from-white via-transparent to-transparent" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(250,243,232,0.4),_transparent_55%)]" />
 
       <div className="container relative">
         <div className="mx-auto max-w-2xl text-center">
           <p className="text-xs font-semibold uppercase tracking-[0.3em] text-amber-500">
-            Réseau de diffusion
+            Nos partenaires
           </p>
           <h2 className="mt-4 font-playfair text-3xl leading-tight text-slate-900 sm:text-4xl lg:text-5xl">
-            Nos partenaires de confiance
+            Ils nous font confiance
           </h2>
           <p className="mt-6 text-lg text-slate-600">
-            Une sélection de libraires, plateformes et médias spécialisés qui accompagnent la visibilité des livres Success Publishing.
+            Découvrez les organisations et institutions qui collaborent avec notre maison d'édition.
           </p>
         </div>
 
-        <div className="mt-12 flex flex-wrap justify-center gap-3">
-          {categories.map((category) => (
-            <Badge
-              key={category}
-              variant="outline"
-              className="rounded-full border border-slate-200 bg-white/70 px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.22em] text-slate-500 backdrop-blur"
-            >
-              {category}
-            </Badge>
-          ))}
-        </div>
-
-        <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6">
-          {partnersData.partners.map((partner) => (
-            <div
+        <div className="mt-16 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-8">
+          {partners.map((partner, index) => (
+            <article
               key={partner.id}
-              className="group flex h-full flex-col items-center justify-center rounded-[26px] border border-slate-100 bg-white/80 p-6 text-center shadow-[0_22px_45px_-32px_rgba(15,23,42,0.45)] transition-transform duration-500 hover:-translate-y-2 hover:shadow-[0_38px_65px_-35px_rgba(15,23,42,0.5)]"
+              className="group flex flex-col items-center text-center transition-all duration-300 hover:scale-105"
+              style={{ transitionDelay: `${index * 50}ms` }}
             >
-              <div className="relative mb-4 flex h-16 w-16 items-center justify-center rounded-2xl border border-slate-100 bg-slate-50/80 group-hover:border-amber-200 group-hover:bg-amber-50/60">
+              <div className="relative mb-4 h-20 w-20 overflow-hidden rounded-full border-2 border-slate-100 bg-white shadow-lg transition-all duration-300 group-hover:shadow-xl">
                 <Image
-                  src={partner.logo}
-                  alt={`Logo ${partner.name}`}
+                  src={partner.logo_url || '/images/placeholder-partner.jpg'}
+                  alt={`Logo de ${partner.name}'s`}
                   fill
-                  className="object-contain grayscale transition-all duration-500 group-hover:grayscale-0"
-                  sizes="64px"
+                  className="object-contain p-2 transition-transform duration-300 group-hover:scale-110"
+                  sizes="80px"
                   unoptimized
                 />
               </div>
-              <h3 className="font-semibold text-sm text-slate-800 group-hover:text-amber-600">
+
+              <h3 className="font-semibold text-slate-900 transition-colors duration-300 group-hover:text-amber-600">
                 {partner.name}
               </h3>
-              <p className="mt-1 text-xs text-slate-500">{partner.category}</p>
-            </div>
-          ))}
-        </div>
 
-        <div className="mt-16 grid gap-6 text-center sm:grid-cols-3">
-          {[{
-            value: '50+',
-            label: 'Partenaires actifs'
-          }, {
-            value: '2 000+',
-            label: 'Points de vente'
-          }, {
-            value: '15',
-            label: 'Pays couverts'
-          }].map((stat) => (
-            <div key={stat.label} className="rounded-[30px] border border-slate-100 bg-white/80 px-6 py-8 shadow-[0_18px_45px_-30px_rgba(15,23,42,0.35)]">
-              <div className="font-playfair text-3xl font-semibold text-slate-900">{stat.value}</div>
-              <p className="mt-2 text-sm text-slate-600">{stat.label}</p>
-            </div>
-          ))}
-        </div>
+              {partner.website_url && (
+                <a
+                  href={partner.website_url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-2 flex items-center gap-1 text-xs text-slate-500 transition-colors duration-300 hover:text-amber-500"
+                >
+                  Visiter le site
+                  <ExternalLink className="h-3 w-3" />
+                </a>
+              )}
 
-        <div className="mt-16 text-center">
-          <div className="mx-auto max-w-2xl rounded-[36px] border border-slate-100 bg-white/85 px-10 py-10 shadow-[0_22px_50px_-32px_rgba(15,23,42,0.4)] backdrop-blur">
-            <h3 className="font-playfair text-3xl text-slate-900">
-              Vous êtes un professionnel du livre ?
-            </h3>
-            <p className="mt-4 text-sm text-slate-600">
-              Échangeons sur les prochaines parutions et sur les dispositifs de lancement disponibles pour vos points de vente.
-            </p>
-            <button className="mt-6 rounded-full bg-slate-900 px-8 py-4 text-sm font-semibold uppercase tracking-[0.2em] text-white transition-transform duration-300 hover:-translate-y-0.5 hover:bg-slate-800">
-              Devenir partenaire
-            </button>
-          </div>
+              {partner.description && (
+                <p className="mt-3 text-xs text-slate-600 line-clamp-2">
+                  {partner.description}
+                </p>
+              )}
+            </article>
+          ))}
         </div>
       </div>
     </section>
