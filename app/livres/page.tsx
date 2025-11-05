@@ -5,7 +5,7 @@ import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { ArrowRight, Filter, BookOpen, Search } from 'lucide-react';
-import { useBooksList } from '@/lib/hooks/use-books';
+import { usePublicBooksList } from '@/lib/hooks/use-books';
 import { Skeleton } from '@/components/ui/skeleton';
 import { BookDetailsModal } from '@/components/BookDetailsModal';
 import { Book } from '@/lib/api/books';
@@ -20,7 +20,7 @@ const BooksPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
 
-  const { data: booksResponse, isLoading, error } = useBooksList({
+  const { data: booksResponse, isLoading, error } = usePublicBooksList({
     per_page: 100,
     status: 'published'
   });

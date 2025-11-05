@@ -25,6 +25,15 @@ Route::middleware('throttle:60,1')->group(function () {
         Route::post('refresh', [AuthController::class, 'refresh'])->middleware('jwt.refresh');
     });
 
+    // Public routes (no authentication required) - direct access
+    Route::get('books', [App\Http\Controllers\BookController::class, 'index']);
+    Route::get('books/{slug}', [App\Http\Controllers\BookController::class, 'show']);
+    Route::get('authors', [App\Http\Controllers\AuthorController::class, 'index']);
+    Route::get('authors/{slug}', [App\Http\Controllers\AuthorController::class, 'show']);
+    Route::get('partners', [App\Http\Controllers\PartnerController::class, 'index']);
+    Route::get('partners/{partner}', [App\Http\Controllers\PartnerController::class, 'show']);
+
+    // Public routes with prefix (backward compatibility)
     Route::prefix('public')->group(function () {
         Route::get('authors', [App\Http\Controllers\AuthorController::class, 'index']);
         Route::get('authors/{slug}', [App\Http\Controllers\AuthorController::class, 'show']);

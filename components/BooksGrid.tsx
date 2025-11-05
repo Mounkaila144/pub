@@ -5,7 +5,7 @@ import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { ArrowRight, Filter, Star } from 'lucide-react';
-import { useBooksList } from '@/lib/hooks/use-books';
+import { usePublicBooksList } from '@/lib/hooks/use-books';
 import { Skeleton } from '@/components/ui/skeleton';
 import { BookDetailsModal } from './BookDetailsModal';
 import { Book } from '@/lib/api/books';
@@ -16,7 +16,7 @@ const BooksGrid = () => {
   const [selectedBook, setSelectedBook] = useState<Book | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const { data: booksResponse, isLoading, error } = useBooksList({
+  const { data: booksResponse, isLoading, error } = usePublicBooksList({
     per_page: 20,
     status: 'published'
   });

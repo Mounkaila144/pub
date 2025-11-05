@@ -5,7 +5,7 @@ import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { ArrowRight, BookOpen } from 'lucide-react';
-import { useAuthorsList } from '@/lib/hooks/use-authors';
+import { usePublicAuthorsList } from '@/lib/hooks/use-authors';
 import { Skeleton } from '@/components/ui/skeleton';
 import { AuthorDetailsModal } from './AuthorDetailsModal';
 import { Author } from '@/lib/api/authors';
@@ -14,7 +14,7 @@ const AuthorsGrid = () => {
   const [selectedAuthor, setSelectedAuthor] = useState<Author | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const { data: authorsResponse, isLoading, error } = useAuthorsList({
+  const { data: authorsResponse, isLoading, error } = usePublicAuthorsList({
     per_page: 20,
     is_active: true
   });

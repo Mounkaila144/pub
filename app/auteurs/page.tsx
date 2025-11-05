@@ -5,7 +5,7 @@ import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { ArrowRight, BookOpen, Users, Search } from 'lucide-react';
-import { useAuthorsList } from '@/lib/hooks/use-authors';
+import { usePublicAuthorsList } from '@/lib/hooks/use-authors';
 import { Skeleton } from '@/components/ui/skeleton';
 import { AuthorDetailsModal } from '@/components/AuthorDetailsModal';
 import { Author } from '@/lib/api/authors';
@@ -19,7 +19,7 @@ const AuthorsPage = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [filterActive, setFilterActive] = useState<'tous' | 'actifs'>('tous');
 
-  const { data: authorsResponse, isLoading, error } = useAuthorsList({
+  const { data: authorsResponse, isLoading, error } = usePublicAuthorsList({
     per_page: 100,
   });
 

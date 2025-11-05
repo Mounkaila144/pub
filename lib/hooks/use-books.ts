@@ -1,5 +1,5 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
-import { booksApi, BooksListParams, BooksListResponse, Book, CreateBookRequest, UpdateBookRequest } from '@/lib/api/books'
+import { booksApi, publicBooksApi, BooksListParams, BooksListResponse, Book, CreateBookRequest, UpdateBookRequest } from '@/lib/api/books'
 import { toast } from 'sonner'
 
 export function useBooksList(params: BooksListParams = {}) {
@@ -92,5 +92,22 @@ export function useBook(id: string) {
     queryKey: ['books', id],
     queryFn: () => booksApi.get(id),
     enabled: !!id,
+  })
+}
+
+// Public hooks (no authentication required)
+export function usePublicBooksList(params: BooksListParams = {}) {
+  return useQuery<BooksListResponse, Error>({
+    queryKey: ['public', 'books', 'list', params],
+    queryFn: () => publicBooksApi.list(params),
+    staleTime: 1000 * 60 * 5,
+  })
+}
+
+export function usePublicBook(slugOrId: string) {
+  return useQuery<Book, Error>({
+    queryKey: ['public', 'books', slugOrId],
+    queryFn: () => publicBooksApi.get(slugOrId),
+    enabled: !!slugOrId,
   })
 }

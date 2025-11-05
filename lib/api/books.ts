@@ -97,6 +97,7 @@ export interface UpdateBookRequest {
 }
 
 const ADMIN_BOOKS_ENDPOINT = '/admin/books'
+const PUBLIC_BOOKS_ENDPOINT = '/books'
 
 const buildAuthHeaders = (token: string | null) =>
   token
@@ -205,6 +206,39 @@ export const booksApi = {
     const response = await api.delete<Book>(`${ADMIN_BOOKS_ENDPOINT}/${id}/cover`, {
       headers: buildAuthHeaders(token),
     })
+    return response.data
+  },
+}
+
+// Public API endpoints (no authentication required)
+export const publicBooksApi = {
+  list: async (params: BooksListParams = {}): Promise<BooksListResponse> => {
+    const searchParams = new URLSearchParams()
+
+    if (params.page) searchParams.append('page', params.page.toString())
+    if (params.per_page) searchParams.append('per_page', params.per_page.toString())
+    if (params.search) searchParams.append('search', params.search)
+    if (params.status) searchParams.append('status', params.status)
+    if (params.language) searchParams.append('language', params.language)
+    if (params.author_id) searchParams.append('author_id', params.author_id)
+    if (params.year) searchParams.append('year', params.year)
+    if (params.sort_by) searchParams.append('sort_by', params.sort_by)
+    if (params.sort_order) searchParams.append('sort_order', params.sort_order)
+
+    const queryString = searchParams.toString()
+    const url = queryString ? `${PUBLIC_BOOKS_ENDPOINT}?${queryString}` : PUBLIC_BOOKS_ENDPOINT
+
+    const response = await api.get<BooksListResponse>(url)
+    const payload = response.data
+    return {
+      ...payload,
+      data: payload.data || [],
+      meta: normalizeMeta(payload.meta || {}),
+    }
+  },
+
+  get: async (slugOrId: string): Promise<Book> => {
+    const response = await api.get<Book>(`${PUBLIC_BOOKS_ENDPOINT}/${slugOrId}`)
     return response.data
   },
 }

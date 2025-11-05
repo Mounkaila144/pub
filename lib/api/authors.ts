@@ -82,6 +82,7 @@ export interface UpdateAuthorRequest {
 }
 
 const ADMIN_AUTHORS_ENDPOINT = '/admin/authors'
+const PUBLIC_AUTHORS_ENDPOINT = '/authors'
 
 const buildAuthHeaders = (token: string | null) =>
   token
@@ -233,6 +234,37 @@ export const authorsApi = {
     const response = await api.delete<Author>(`${ADMIN_AUTHORS_ENDPOINT}/${id}/photo`, {
       headers: buildAuthHeaders(token),
     })
+    return normalizeAuthor(response.data)
+  },
+}
+
+// Public API endpoints (no authentication required)
+export const publicAuthorsApi = {
+  list: async (params: AuthorsListParams = {}): Promise<AuthorsListResponse> => {
+    const searchParams = new URLSearchParams()
+
+    if (params.page) searchParams.append('page', params.page.toString())
+    if (params.per_page) searchParams.append('per_page', params.per_page.toString())
+    if (params.search) searchParams.append('search', params.search)
+    if (params.is_active !== undefined) searchParams.append('is_active', params.is_active.toString())
+    if (params.sort_by) searchParams.append('sort_by', params.sort_by)
+    if (params.sort_order) searchParams.append('sort_order', params.sort_order)
+
+    const queryString = searchParams.toString()
+    const url = queryString ? `${PUBLIC_AUTHORS_ENDPOINT}?${queryString}` : PUBLIC_AUTHORS_ENDPOINT
+
+    const response = await api.get<AuthorsListResponse>(url)
+    const payload = response.data
+    const authors = Array.isArray(payload.data) ? payload.data.map(normalizeAuthor) : []
+    return {
+      ...payload,
+      data: authors,
+      meta: normalizeMeta(payload.meta || {}),
+    }
+  },
+
+  get: async (id: string): Promise<Author> => {
+    const response = await api.get<Author>(`${PUBLIC_AUTHORS_ENDPOINT}/${id}`)
     return normalizeAuthor(response.data)
   },
 }

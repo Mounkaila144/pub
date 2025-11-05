@@ -1,5 +1,5 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
-import { authorsApi, AuthorsListParams, AuthorsListResponse, Author, CreateAuthorRequest, UpdateAuthorRequest } from '@/lib/api/authors'
+import { authorsApi, publicAuthorsApi, AuthorsListParams, AuthorsListResponse, Author, CreateAuthorRequest, UpdateAuthorRequest } from '@/lib/api/authors'
 import { toast } from 'sonner'
 
 export function useAuthorsList(params: AuthorsListParams = {}) {
@@ -109,5 +109,22 @@ export function useDeleteAuthorPhoto() {
     onError: (error) => {
       toast.error('Erreur lors de la suppression de la photo')
     },
+  })
+}
+
+// Public hooks (no authentication required)
+export function usePublicAuthorsList(params: AuthorsListParams = {}) {
+  return useQuery<AuthorsListResponse, Error>({
+    queryKey: ['public', 'authors', 'list', params],
+    queryFn: () => publicAuthorsApi.list(params),
+    staleTime: 1000 * 60 * 5,
+  })
+}
+
+export function usePublicAuthor(id: string) {
+  return useQuery<Author, Error>({
+    queryKey: ['public', 'authors', id],
+    queryFn: () => publicAuthorsApi.get(id),
+    enabled: !!id,
   })
 }
