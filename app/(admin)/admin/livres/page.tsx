@@ -1,7 +1,8 @@
 'use client'
 
 import React, { useState } from 'react'
-import { Plus, Edit, Trash2 } from 'lucide-react'
+import { Plus, Edit, Trash2, Settings, ShoppingCart } from 'lucide-react'
+import { useRouter } from 'next/navigation'
 import { useBooksList, useDeleteBook, useCreateBook, useUpdateBook, useBook } from '@/lib/hooks/use-books'
 import { Book } from '@/lib/api/books'
 import { DataTablePaginated, Column, Filter } from '@/components/ui/data-table-paginated'
@@ -14,6 +15,7 @@ import { MoreHorizontal } from 'lucide-react'
 import { BookForm } from '@/components/forms/book-form'
 
 export default function BooksPage() {
+  const router = useRouter()
   const [currentPage, setCurrentPage] = useState(1)
   const [search, setSearch] = useState('')
   const [statusFilter, setStatusFilter] = useState<string>('')
@@ -111,6 +113,10 @@ export default function BooksPage() {
             <DropdownMenuItem onClick={() => setEditingBook(book)}>
               <Edit className="h-4 w-4 mr-2" />
               Modifier
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => router.push(`/admin/livres/${book.id}/options`)}>
+              <ShoppingCart className="h-4 w-4 mr-2" />
+              Options d'achat & Promos
             </DropdownMenuItem>
             <AlertDialog>
               <AlertDialogTrigger asChild>

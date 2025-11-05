@@ -65,7 +65,7 @@ const Hero = () => {
                     <div className="relative overflow-hidden rounded-[32px] bg-slate-950/30">
                       <Image
                         src="/images/kirikou/high-angle-girl-library-reading.jpg"
-                        alt="Autrice inspirée dans une bibliothèque lumineuse"
+                        alt="Auteurs Success Publishing - Une communauté d'écrivains talentueux"
                         width={960}
                         height={1280}
                         className="h-full w-full object-cover"
@@ -76,24 +76,24 @@ const Hero = () => {
 
                   <div className="absolute -top-8 right-0 w-28 rounded-2xl border border-white/20 bg-slate-950/40 p-2 text-left shadow-2xl backdrop-blur-xl sm:-top-14 sm:right-4 sm:w-40 sm:rounded-3xl sm:p-4">
                     <p className="text-[9px] font-semibold uppercase tracking-[0.25em] text-teal-100 sm:text-[11px]">
-                      À la une
+                      Notre engagement
                     </p>
                     <p className="mt-2 text-xs font-semibold text-white sm:mt-3 sm:text-sm">
-                      &laquo; Le Leadership de Kirikou &raquo;
+                      500+ Livres publiés
                     </p>
                     <p className="mt-1 text-[10px] text-sky-100/70 sm:text-xs">
-                      Disponible dès maintenant sur toutes les plateformes partenaires.
+                      Des auteurs accompagnés de la première page à la réussite.
                     </p>
                   </div>
 
                   <div className="absolute inset-x-3 bottom-3 rounded-2xl border border-white/20 bg-slate-950/30 px-3 py-3 text-left shadow-xl backdrop-blur-xl sm:inset-x-6 sm:bottom-6 sm:rounded-3xl sm:px-6 sm:py-5">
                     <p className="text-[9px] font-semibold uppercase tracking-[0.3em] text-teal-100 sm:text-xs">
-                      Lancement réussi
+                      Résultats moyens
                     </p>
                     <div className="mt-2 flex items-center gap-2 sm:mt-3 sm:gap-4">
-                      <p className="font-playfair text-xl font-semibold text-white sm:text-3xl">+32%</p>
+                      <p className="font-playfair text-xl font-semibold text-white sm:text-3xl">4.9/5</p>
                       <p className="max-w-[180px] text-[10px] text-sky-100/80 sm:max-w-[220px] sm:text-sm">
-                        de ventes sur les six premiers mois grâce à notre stratégie de diffusion premium.
+                        Note de satisfaction moyenne de nos auteurs publiés.
                       </p>
                     </div>
                   </div>

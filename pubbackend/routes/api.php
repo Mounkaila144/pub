@@ -30,6 +30,9 @@ Route::middleware('throttle:60,1')->group(function () {
         Route::get('authors/{slug}', [App\Http\Controllers\AuthorController::class, 'show']);
         Route::get('books', [App\Http\Controllers\BookController::class, 'index']);
         Route::get('books/{slug}', [App\Http\Controllers\BookController::class, 'show']);
+        Route::get('books/{slug}/detail', [App\Http\Controllers\BookController::class, 'showDetail']);
+        Route::get('books/{book}/purchase-types', [App\Http\Controllers\Api\PurchaseTypeController::class, 'active']);
+        Route::get('books/{book}/promotions', [App\Http\Controllers\Api\PromotionController::class, 'valid']);
         Route::get('partners', [App\Http\Controllers\PartnerController::class, 'index']);
         Route::get('partners/{partner}', [App\Http\Controllers\PartnerController::class, 'show']);
     });
@@ -59,6 +62,23 @@ Route::middleware('throttle:60,1')->group(function () {
             Route::post('{book}/authors/attach', [App\Http\Controllers\BookController::class, 'attachAuthors']);
             Route::post('{book}/authors/sync', [App\Http\Controllers\BookController::class, 'syncAuthors']);
             Route::delete('{book}/authors/{author}', [App\Http\Controllers\BookController::class, 'detachAuthor']);
+
+            // Purchase Types routes
+            Route::prefix('{book}/purchase-types')->group(function () {
+                Route::get('/', [App\Http\Controllers\Api\PurchaseTypeController::class, 'index']);
+                Route::post('/', [App\Http\Controllers\Api\PurchaseTypeController::class, 'store']);
+                Route::put('{purchaseType}', [App\Http\Controllers\Api\PurchaseTypeController::class, 'update']);
+                Route::delete('{purchaseType}', [App\Http\Controllers\Api\PurchaseTypeController::class, 'destroy']);
+            });
+
+            // Promotions routes
+            Route::prefix('{book}/promotions')->group(function () {
+                Route::get('/', [App\Http\Controllers\Api\PromotionController::class, 'index']);
+                Route::post('/', [App\Http\Controllers\Api\PromotionController::class, 'store']);
+                Route::put('{promotion}', [App\Http\Controllers\Api\PromotionController::class, 'update']);
+                Route::delete('{promotion}', [App\Http\Controllers\Api\PromotionController::class, 'destroy']);
+                Route::post('{promotion}/calculate', [App\Http\Controllers\Api\PromotionController::class, 'calculate']);
+            });
         });
 
         Route::prefix('partners')->group(function () {

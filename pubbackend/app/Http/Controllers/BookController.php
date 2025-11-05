@@ -7,6 +7,7 @@ use App\Http\Requests\StoreBookRequest;
 use App\Http\Requests\UpdateBookRequest;
 use App\Http\Resources\BookResource;
 use App\Http\Resources\BookCollection;
+use App\Http\Resources\BookDetailResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Storage;
@@ -85,6 +86,14 @@ class BookController extends Controller
     {
         $book = Book::with('authors')->where('slug', $slug)->firstOrFail();
         return new BookResource($book);
+    }
+
+    public function showDetail($slug)
+    {
+        $book = Book::with(['authors', 'activePurchaseTypes', 'validPromotions'])
+            ->where('slug', $slug)
+            ->firstOrFail();
+        return new BookDetailResource($book);
     }
 
     public function showAdmin(Book $book)

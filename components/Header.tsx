@@ -20,12 +20,12 @@ const Header = () => {
   }, []);
 
   const navItems = [
-    { label: 'Accueil', href: '#' },
-    { label: 'Publier un livre', href: '#publier' },
-    { label: 'Catalogue', href: '#catalogue' },
-    { label: 'Auteurs', href: '#auteurs' },
-    { label: 'Partenaires', href: '#partenaires' },
-    { label: 'Contact', href: '#contact' },
+    { label: 'Accueil', href: '/' },
+    { label: 'Livres', href: '/livres' },
+    { label: 'Auteurs', href: '/auteurs' },
+    { label: 'Publier un livre', href: '/#publier' },
+    { label: 'Partenaires', href: '/#partenaires' },
+    { label: 'Contact', href: '/#contact' },
   ];
 
   return (

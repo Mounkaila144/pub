@@ -138,6 +138,17 @@ const AuthorsGrid = () => {
         </div>
 
         <div className="mt-16 text-center">
+          <Button
+            variant="outline"
+            size="lg"
+            className="rounded-full border border-slate-300 px-10 py-5 text-sm font-semibold uppercase tracking-[0.2em] text-slate-700 transition-all duration-300 hover:-translate-y-0.5 hover:border-slate-400 hover:text-slate-900"
+            onClick={() => window.location.href = '/auteurs'}
+          >
+            Voir tous les auteurs
+          </Button>
+        </div>
+
+        <div className="mt-16 text-center">
           <div className="mx-auto max-w-2xl rounded-[32px] border border-slate-100 bg-white/80 px-8 py-10 shadow-[0_20px_45px_-30px_rgba(15,23,42,0.4)] backdrop-blur">
             <h3 className="font-playfair text-3xl text-slate-900">
               Envie de rejoindre notre écurie d’auteurs ?

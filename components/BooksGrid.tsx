@@ -132,8 +132,9 @@ const BooksGrid = () => {
           {sortedBooks.map((book, index) => (
             <article
               key={book.id}
-              className="group relative flex h-full flex-col overflow-hidden rounded-[32px] border border-slate-100 bg-white/80 shadow-[0_25px_45px_-30px_rgba(15,23,42,0.35)] transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_45px_65px_-35px_rgba(15,23,42,0.45)]"
+              className="group relative flex h-full flex-col overflow-hidden rounded-[32px] border border-slate-100 bg-white/80 shadow-[0_25px_45px_-30px_rgba(15,23,42,0.35)] transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_45px_65px_-35px_rgba(15,23,42,0.45)] cursor-pointer"
               style={{ transitionDelay: `${index * 40}ms` }}
+              onClick={() => window.location.href = `/livres/${book.slug}`}
             >
               <div className="relative aspect-[3/4] overflow-hidden">
                 <Image
@@ -181,12 +182,13 @@ const BooksGrid = () => {
                     variant="ghost"
                     size="sm"
                     className="gap-2 rounded-full px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-slate-700 transition-all duration-300 hover:bg-slate-900 hover:text-white"
-                    onClick={() => {
+                    onClick={(e) => {
+                      e.stopPropagation();
                       setSelectedBook(book);
                       setIsModalOpen(true);
                     }}
                   >
-                    Voir la fiche
+                    Aperçu rapide
                     <ArrowRight className="h-4 w-4" />
                   </Button>
                 </div>
@@ -200,6 +202,7 @@ const BooksGrid = () => {
             variant="outline"
             size="lg"
             className="rounded-full border border-slate-300 px-10 py-5 text-sm font-semibold uppercase tracking-[0.2em] text-slate-700 transition-all duration-300 hover:-translate-y-0.5 hover:border-slate-400 hover:text-slate-900"
+            onClick={() => window.location.href = '/livres'}
           >
             Voir plus de livres
           </Button>

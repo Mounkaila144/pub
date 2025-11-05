@@ -5,8 +5,9 @@
       <sourceFolder url="file://$MODULE_DIR$/pubbackend/app" isTestSource="false" packagePrefix="App\" />
       <sourceFolder url="file://$MODULE_DIR$/pubbackend/database/factories" isTestSource="false" packagePrefix="Database\Factories\" />
       <sourceFolder url="file://$MODULE_DIR$/pubbackend/database/seeders" isTestSource="false" packagePrefix="Database\Seeders\" />
-      <sourceFolder url="file://$MODULE_DIR$/pubbackend/tests" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/pubbackend/tests" isTestSource="true" packagePrefix="Tests\" />
+      <sourceFolder url="file://$MODULE_DIR$/pubbackend/tests/Feature" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/pubbackend/tests/Unit" isTestSource="true" />
       <excludeFolder url="file://$MODULE_DIR$/pubbackend/vendor/brick/math" />
       <excludeFolder url="file://$MODULE_DIR$/pubbackend/vendor/carbonphp/carbon-doctrine-types" />
       <excludeFolder url="file://$MODULE_DIR$/pubbackend/vendor/composer" />

@@ -51,6 +51,31 @@ class Book extends Model
             ->orderByPivot('contribution_order');
     }
 
+    public function purchaseTypes()
+    {
+        return $this->hasMany(PurchaseType::class)->ordered();
+    }
+
+    public function promotions()
+    {
+        return $this->hasMany(Promotion::class)->ordered();
+    }
+
+    public function activePurchaseTypes()
+    {
+        return $this->hasMany(PurchaseType::class)->active()->ordered();
+    }
+
+    public function activePromotions()
+    {
+        return $this->hasMany(Promotion::class)->active()->ordered();
+    }
+
+    public function validPromotions()
+    {
+        return $this->hasMany(Promotion::class)->valid()->ordered();
+    }
+
     public function getCoverUrlAttribute()
     {
         return $this->cover_path ? asset('storage/' . $this->cover_path) : null;
